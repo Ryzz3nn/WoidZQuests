@@ -283,7 +283,7 @@ public final class WoidZQuests extends JavaPlugin {
         long trackingDurationMs = trackingDurationHours * 60 * 60 * 1000L;
         
         // Schedule repeating cleanup task
-        Bukkit.getScheduler().runTaskTimerAsync(this, () -> {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             databaseManager.executeAsync(connection -> {
                 String sql = "DELETE FROM placed_blocks WHERE placed_at < ?";
                 
