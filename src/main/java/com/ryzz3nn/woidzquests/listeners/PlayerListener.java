@@ -43,6 +43,10 @@ public class PlayerListener implements Listener {
         // Start tracking playtime for TIMED/SURVIVAL quests
         plugin.getPlaytimeTracker().startTracking(player.getUniqueId());
         
+        // Load player's quests from database
+        plugin.getDailyQuestManager().loadDailyQuests(player.getUniqueId());
+        plugin.getWeeklyQuestManager().loadWeeklyQuests(player.getUniqueId());
+        
         // Auto-assign quests if enabled
         if (plugin.getConfigManager().getBoolean("quests.auto-assign", true)) {
             // TODO: Auto-assign quests

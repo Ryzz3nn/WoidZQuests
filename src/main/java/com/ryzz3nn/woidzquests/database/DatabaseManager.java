@@ -185,6 +185,50 @@ public class DatabaseManager {
                 )
             """);
             
+            // Daily quests table
+            executeUpdate(connection, """
+                CREATE TABLE IF NOT EXISTS daily_quests (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    player_uuid TEXT NOT NULL,
+                    quest_id TEXT NOT NULL,
+                    quest_name TEXT NOT NULL,
+                    quest_description TEXT NOT NULL,
+                    quest_type TEXT NOT NULL,
+                    display_material TEXT NOT NULL,
+                    target TEXT NOT NULL,
+                    target_amount INTEGER NOT NULL,
+                    current_progress INTEGER DEFAULT 0,
+                    completed BOOLEAN DEFAULT FALSE,
+                    claimed BOOLEAN DEFAULT FALSE,
+                    requirements TEXT DEFAULT '{}',
+                    reward_data TEXT NOT NULL,
+                    created_date INTEGER NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (player_uuid) REFERENCES player_data(uuid) ON DELETE CASCADE
+                )
+            """);
+            
+            // Weekly quests table
+            executeUpdate(connection, """
+                CREATE TABLE IF NOT EXISTS weekly_quests (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    player_uuid TEXT NOT NULL,
+                    quest_id TEXT NOT NULL,
+                    quest_name TEXT NOT NULL,
+                    quest_description TEXT NOT NULL,
+                    quest_type TEXT NOT NULL,
+                    display_material TEXT NOT NULL,
+                    target TEXT NOT NULL,
+                    target_amount INTEGER NOT NULL,
+                    current_progress INTEGER DEFAULT 0,
+                    completed BOOLEAN DEFAULT FALSE,
+                    claimed BOOLEAN DEFAULT FALSE,
+                    reward_data TEXT NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (player_uuid) REFERENCES player_data(uuid) ON DELETE CASCADE
+                )
+            """);
+            
             // Create indexes for better performance
             executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_player_quests_uuid ON player_quests(player_uuid)");
             executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_player_quests_status ON player_quests(status)");
@@ -194,6 +238,9 @@ public class DatabaseManager {
             executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_placed_blocks_material ON placed_blocks(material)");
             executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_global_quests_type ON global_quests(type)");
             executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_global_quests_completed ON global_quests(completed)");
+            executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_daily_quests_player ON daily_quests(player_uuid)");
+            executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_daily_quests_date ON daily_quests(created_date)");
+            executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_weekly_quests_player ON weekly_quests(player_uuid)");
             
             plugin.getLogger().info("Database tables created successfully");
         }

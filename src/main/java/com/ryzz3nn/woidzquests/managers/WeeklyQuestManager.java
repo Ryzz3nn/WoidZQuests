@@ -120,6 +120,9 @@ public class WeeklyQuestManager {
                         plugin.getBossBarManager().showQuestCompleted(player, convertToDisplayQuest(quest));
                     }
                 }
+                
+                // Save progress to database
+                saveWeeklyQuests(playerId);
                 break;
             }
         }
@@ -209,6 +212,9 @@ public class WeeklyQuestManager {
                     player.sendMessage(plugin.parseMessage("<gray>[<green><bold>✓</bold></green><gray>]<reset> Claimed reward for: <yellow>" + quest.getName() + "<reset>!"));
                 }
                 
+                // Save to database
+                saveWeeklyQuests(playerId);
+                
                 return true;
             }
         }
@@ -246,12 +252,57 @@ public class WeeklyQuestManager {
         generateNewWeeklyQuests(playerId);
     }
     
+    /**
+     * Resets a specific quest slot for a player
+     * @param playerId The player's UUID
+     * @param slotIndex The 0-indexed slot to reset
+     */
+    public void resetQuestSlot(UUID playerId, int slotIndex) {
+        List<WeeklyQuest> quests = getPlayerWeeklyQuests(playerId);
+        
+        if (slotIndex < 0 || slotIndex >= quests.size()) {
+            plugin.getLogger().warning("Invalid quest slot index: " + slotIndex + " for player " + playerId);
+            return;
+        }
+        
+        // Generate a new quest to replace the one at this slot
+        List<WeeklyQuestTemplate> availableTemplates = new ArrayList<>(questTemplates);
+        
+        if (availableTemplates.isEmpty()) {
+            plugin.getLogger().warning("No quest templates available for quest reset!");
+            return;
+        }
+        
+        // Remove templates that are already active for this player
+        for (WeeklyQuest activeQuest : quests) {
+            availableTemplates.removeIf(template -> 
+                template.type.equals(activeQuest.getType()) && template.target.equals(activeQuest.getTarget())
+            );
+        }
+        
+        // If all templates are exhausted, allow reusing them
+        if (availableTemplates.isEmpty()) {
+            availableTemplates = new ArrayList<>(questTemplates);
+        }
+        
+        // Select a new quest randomly
+        Collections.shuffle(availableTemplates);
+        WeeklyQuestTemplate template = availableTemplates.get(0);
+        WeeklyQuest newQuest = createQuestFromTemplate(template);
+        quests.set(slotIndex, newQuest);
+        
+        // TODO: Save updated quest to database
+        
+        plugin.getLogger().info("Reset weekly quest slot " + (slotIndex + 1) + " for player " + playerId);
+    }
+    
     private void generateNewWeeklyQuests(UUID playerId) {
         List<WeeklyQuest> newQuests = generateNewWeeklyQuests();
         playerWeeklyQuests.put(playerId, newQuests);
         
         PlayerData playerData = plugin.getPlayerDataManager().getPlayerData(playerId);
-        // TODO: Save weekly quests to database
+        // Save weekly quests to database
+        saveWeeklyQuests(playerId);
     }
 
     private List<WeeklyQuest> generateNewWeeklyQuests() {
@@ -280,6 +331,114 @@ public class WeeklyQuestManager {
         
         return new WeeklyQuest(questId, questName, questName, template.type, template.target, 
                               amount, template.displayMaterial, reward);
+    }
+    
+    /**
+     * Save weekly quests for a player to the database
+     */
+    private void saveWeeklyQuests(UUID playerId) {
+        List<WeeklyQuest> quests = playerWeeklyQuests.get(playerId);
+        if (quests == null || quests.isEmpty()) {
+            return;
+        }
+        
+        plugin.getDatabaseManager().executeAsync(connection -> {
+            try {
+                // Delete old weekly quests for this player
+                String deleteSql = "DELETE FROM weekly_quests WHERE player_uuid = ?";
+                try (var deleteStmt = connection.prepareStatement(deleteSql)) {
+                    deleteStmt.setString(1, playerId.toString());
+                    deleteStmt.executeUpdate();
+                }
+                
+                // Insert current quests
+                String insertSql = """
+                    INSERT INTO weekly_quests (
+                        player_uuid, quest_id, quest_name, quest_description, quest_type,
+                        display_material, target, target_amount, current_progress,
+                        completed, claimed, reward_data
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+                
+                try (var insertStmt = connection.prepareStatement(insertSql)) {
+                    for (WeeklyQuest quest : quests) {
+                        insertStmt.setString(1, playerId.toString());
+                        insertStmt.setString(2, quest.getId());
+                        insertStmt.setString(3, quest.getName());
+                        insertStmt.setString(4, quest.getDescription());
+                        insertStmt.setString(5, quest.getType());
+                        insertStmt.setString(6, quest.getDisplayMaterial().name());
+                        insertStmt.setString(7, quest.getTarget());
+                        insertStmt.setInt(8, quest.getTargetAmount());
+                        insertStmt.setInt(9, quest.getCurrentProgress());
+                        insertStmt.setBoolean(10, quest.isCompleted());
+                        insertStmt.setBoolean(11, quest.isClaimed());
+                        insertStmt.setString(12, new com.google.gson.Gson().toJson(quest.getReward()));
+                        insertStmt.executeUpdate();
+                    }
+                }
+            } catch (Exception e) {
+                plugin.getLogger().log(java.util.logging.Level.WARNING, "Failed to save weekly quests for player " + playerId, e);
+            }
+        });
+    }
+    
+    /**
+     * Load weekly quests for a player from the database
+     */
+    public void loadWeeklyQuests(UUID playerId) {
+        try (var connection = plugin.getDatabaseManager().getConnection()) {
+            String sql = """
+                SELECT quest_id, quest_name, quest_description, quest_type, display_material,
+                       target, target_amount, current_progress, completed, claimed, reward_data
+                FROM weekly_quests
+                WHERE player_uuid = ?
+            """;
+            
+            try (var stmt = connection.prepareStatement(sql)) {
+                stmt.setString(1, playerId.toString());
+                
+                try (var rs = stmt.executeQuery()) {
+                    List<WeeklyQuest> loadedQuests = new ArrayList<>();
+                    com.google.gson.Gson gson = new com.google.gson.Gson();
+                    
+                    while (rs.next()) {
+                        // Parse display material
+                        Material displayMaterial = Material.valueOf(rs.getString("display_material"));
+                        
+                        // Parse reward
+                        String rewardJson = rs.getString("reward_data");
+                        WeeklyQuest.WeeklyReward reward = gson.fromJson(rewardJson, WeeklyQuest.WeeklyReward.class);
+                        
+                        // Create quest object
+                        WeeklyQuest quest = new WeeklyQuest(
+                            rs.getString("quest_id"),
+                            rs.getString("quest_name"),
+                            rs.getString("quest_description"),
+                            rs.getString("quest_type"),
+                            rs.getString("target"),
+                            rs.getInt("target_amount"),
+                            displayMaterial,
+                            reward
+                        );
+                        
+                        // Set progress and state
+                        quest.setCurrentProgress(rs.getInt("current_progress"));
+                        quest.setCompleted(rs.getBoolean("completed"));
+                        quest.setClaimed(rs.getBoolean("claimed"));
+                        
+                        loadedQuests.add(quest);
+                    }
+                    
+                    if (!loadedQuests.isEmpty()) {
+                        playerWeeklyQuests.put(playerId, loadedQuests);
+                        plugin.getLogger().info("Loaded " + loadedQuests.size() + " weekly quests for player " + playerId);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(java.util.logging.Level.WARNING, "Failed to load weekly quests for player " + playerId, e);
+        }
     }
 
     private static class WeeklyQuestTemplate {

@@ -112,6 +112,14 @@ commands:
     - "&d/wq quest <player> progress <id> <amount> &7- Set quest progress"
     - "&d/wq player <player> reset &7- Reset player data"
     - "&d/wq debug &7- Toggle debug mode"
+  
+  reset:
+    all-success: "<gray>[<green><bold>↻</bold></green><gray>]<reset> Reset all <light_purple>{type}<reset> quests for <light_purple>{player}<reset>."
+    all-notification: "<gray>[<yellow><bold>↻</bold></yellow><gray>]<reset> An admin has reset all your <yellow>{type}<reset> quests! Check <yellow>/quests<reset>."
+    slot-success: "<gray>[<green><bold>↻</bold></green><gray>]<reset> Reset <light_purple>{type}<reset> quest slot <light_purple>#{slot}<reset> for <light_purple>{player}<reset>."
+    slot-notification: "<gray>[<yellow><bold>↻</bold></yellow><gray>]<reset> An admin has reset your <yellow>{type}<reset> quest slot <yellow>#{slot}<reset>! Check <yellow>/quests<reset>."
+    player-not-found: "<gray>[<red><bold>!</bold></red><gray>]<reset> Player <red>{player}<reset> not found or is offline."
+    invalid-slot: "<gray>[<red><bold>!</bold></red><gray>]<reset> Invalid slot <red>{slot}<reset>. Must be between <light_purple>1<reset> and <light_purple>{max}<reset>."
 
 # Error Messages
 errors:

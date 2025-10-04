@@ -24,6 +24,11 @@ permissions:
   woidzquests.admin:
     description: 'Access to admin commands'
     default: op
+    children:
+      woidzquests.admin.reset: true
+  woidzquests.admin.reset:
+    description: 'Access to reset/reroll player quests'
+    default: op
   woidzquests.use:
     description: 'Access to use quests'
     default: true

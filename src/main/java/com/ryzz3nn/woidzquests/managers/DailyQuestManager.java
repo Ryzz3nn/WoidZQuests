@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
+import java.sql.SQLException;
 
 public class DailyQuestManager {
     
@@ -205,11 +206,60 @@ public class DailyQuestManager {
     public void generateNewDailyQuestsForPlayer(UUID playerId) {
         playerDailyQuests.put(playerId, generateNewDailyQuests());
         
-        // TODO: Save daily quests to database
+        // Save daily quests to database
+        saveDailyQuests(playerId);
         
         Player player = Bukkit.getPlayer(playerId);
         if (player != null && player.isOnline()) {
             player.sendMessage(plugin.parseMessage("<gray>[<yellow><bold>Daily Quests</bold></yellow><gray>]<reset> New daily quests available! Use <yellow>/quests<reset> to view them."));
+        }
+    }
+    
+    /**
+     * Resets a specific quest slot for a player
+     * @param playerId The player's UUID
+     * @param slotIndex The 0-indexed slot to reset
+     */
+    public void resetQuestSlot(UUID playerId, int slotIndex) {
+        List<DailyQuest> quests = getPlayerDailyQuests(playerId);
+        
+        if (slotIndex < 0 || slotIndex >= quests.size()) {
+            plugin.getLogger().warning("Invalid quest slot index: " + slotIndex + " for player " + playerId);
+            return;
+        }
+        
+        // Generate a new quest to replace the one at this slot
+        List<DailyQuestTemplate> availableTemplates = new ArrayList<>(questTemplates);
+        
+        if (availableTemplates.isEmpty()) {
+            plugin.getLogger().warning("No quest templates available for quest reset!");
+            return;
+        }
+        
+        // Remove templates that are already active for this player
+        for (DailyQuest activeQuest : quests) {
+            availableTemplates.removeIf(template -> {
+                // Extract template ID from quest ID (format: "templateId_timestamp")
+                String activeTemplateId = activeQuest.getId().split("_")[0];
+                return template.id.equals(activeTemplateId);
+            });
+        }
+        
+        // If all templates are exhausted, allow reusing them
+        if (availableTemplates.isEmpty()) {
+            availableTemplates = new ArrayList<>(questTemplates);
+        }
+        
+        // Select a new quest
+        DailyQuestTemplate template = selectWeightedRandom(availableTemplates);
+        if (template != null) {
+            DailyQuest newQuest = createQuestFromTemplate(template);
+            quests.set(slotIndex, newQuest);
+            
+            // Save updated quest to database
+            saveDailyQuests(playerId);
+            
+            plugin.getLogger().info("Reset daily quest slot " + (slotIndex + 1) + " for player " + playerId);
         }
     }
     
@@ -349,7 +399,7 @@ public class DailyQuestManager {
                 }
                 
                 // Save progress to database
-                // TODO: Save quest progress to database
+                saveDailyQuests(playerId);
                 }
             }
         }
@@ -481,7 +531,7 @@ public class DailyQuestManager {
                     player.sendMessage(plugin.parseMessage("<gray>[<green><bold>✓</bold></green><gray>]<reset> Claimed reward for: <yellow>" + quest.getName() + "<reset>!"));
                     
                     // Save to database
-                    // TODO: Save claimed status to database
+                    saveDailyQuests(playerId);
                     
                     return true;
                 }
@@ -527,6 +577,127 @@ public class DailyQuestManager {
         int newMilestone = newPercentage / 10;
         
         return newMilestone > oldMilestone;
+    }
+    
+    /**
+     * Save daily quests for a player to the database
+     */
+    private void saveDailyQuests(UUID playerId) {
+        List<DailyQuest> quests = playerDailyQuests.get(playerId);
+        if (quests == null || quests.isEmpty()) {
+            return;
+        }
+        
+        plugin.getDatabaseManager().executeAsync(connection -> {
+            try {
+                // Delete old daily quests for this player
+                String deleteSql = "DELETE FROM daily_quests WHERE player_uuid = ?";
+                try (var deleteStmt = connection.prepareStatement(deleteSql)) {
+                    deleteStmt.setString(1, playerId.toString());
+                    deleteStmt.executeUpdate();
+                }
+                
+                // Insert current quests
+                String insertSql = """
+                    INSERT INTO daily_quests (
+                        player_uuid, quest_id, quest_name, quest_description, quest_type,
+                        display_material, target, target_amount, current_progress,
+                        completed, claimed, requirements, reward_data, created_date
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """;
+                
+                try (var insertStmt = connection.prepareStatement(insertSql)) {
+                    for (DailyQuest quest : quests) {
+                        insertStmt.setString(1, playerId.toString());
+                        insertStmt.setString(2, quest.getId());
+                        insertStmt.setString(3, quest.getName());
+                        insertStmt.setString(4, quest.getDescription());
+                        insertStmt.setString(5, quest.getType().name());
+                        insertStmt.setString(6, quest.getDisplayMaterial().name());
+                        insertStmt.setString(7, quest.getTarget());
+                        insertStmt.setInt(8, quest.getTargetAmount());
+                        insertStmt.setInt(9, quest.getCurrentProgress());
+                        insertStmt.setBoolean(10, quest.isCompleted());
+                        insertStmt.setBoolean(11, quest.isClaimed());
+                        insertStmt.setString(12, new com.google.gson.Gson().toJson(quest.getRequirements()));
+                        insertStmt.setString(13, new com.google.gson.Gson().toJson(quest.getReward()));
+                        insertStmt.setLong(14, quest.getCreatedDate());
+                        insertStmt.executeUpdate();
+                    }
+                }
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.WARNING, "Failed to save daily quests for player " + playerId, e);
+            }
+        });
+    }
+    
+    /**
+     * Load daily quests for a player from the database
+     */
+    public void loadDailyQuests(UUID playerId) {
+        try (var connection = plugin.getDatabaseManager().getConnection()) {
+            String sql = """
+                SELECT quest_id, quest_name, quest_description, quest_type, display_material,
+                       target, target_amount, current_progress, completed, claimed,
+                       requirements, reward_data, created_date
+                FROM daily_quests
+                WHERE player_uuid = ?
+            """;
+            
+            try (var stmt = connection.prepareStatement(sql)) {
+                stmt.setString(1, playerId.toString());
+                
+                try (var rs = stmt.executeQuery()) {
+                    List<DailyQuest> loadedQuests = new ArrayList<>();
+                    com.google.gson.Gson gson = new com.google.gson.Gson();
+                    
+                    while (rs.next()) {
+                        // Parse quest type
+                        DailyQuest.QuestType questType = DailyQuest.QuestType.valueOf(rs.getString("quest_type"));
+                        
+                        // Parse display material
+                        Material displayMaterial = Material.valueOf(rs.getString("display_material"));
+                        
+                        // Parse requirements
+                        String requirementsJson = rs.getString("requirements");
+                        Map<String, Object> requirements = gson.fromJson(requirementsJson, 
+                            new com.google.gson.reflect.TypeToken<Map<String, Object>>(){}.getType());
+                        
+                        // Parse reward
+                        String rewardJson = rs.getString("reward_data");
+                        DailyQuest.DailyReward reward = gson.fromJson(rewardJson, DailyQuest.DailyReward.class);
+                        
+                        // Create quest object
+                        DailyQuest quest = new DailyQuest(
+                            rs.getString("quest_id"),
+                            rs.getString("quest_name"),
+                            rs.getString("quest_description"),
+                            questType,
+                            displayMaterial,
+                            rs.getString("target"),
+                            rs.getInt("target_amount"),
+                            reward
+                        );
+                        
+                        // Set progress and state
+                        quest.setCurrentProgress(rs.getInt("current_progress"));
+                        quest.setCompleted(rs.getBoolean("completed"));
+                        quest.setClaimed(rs.getBoolean("claimed"));
+                        quest.setRequirements(requirements);
+                        quest.setCreatedDate(rs.getLong("created_date"));
+                        
+                        loadedQuests.add(quest);
+                    }
+                    
+                    if (!loadedQuests.isEmpty()) {
+                        playerDailyQuests.put(playerId, loadedQuests);
+                        plugin.getLogger().info("Loaded " + loadedQuests.size() + " daily quests for player " + playerId);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Failed to load daily quests for player " + playerId, e);
+        }
     }
     
     // Template class for quest generation
