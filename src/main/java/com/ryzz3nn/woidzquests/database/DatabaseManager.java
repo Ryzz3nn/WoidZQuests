@@ -148,10 +148,13 @@ public class DatabaseManager {
                     z INTEGER NOT NULL,
                     material TEXT NOT NULL,
                     player_uuid TEXT NOT NULL,
-                    placed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    placed_at INTEGER NOT NULL,
                     PRIMARY KEY (world, x, y, z)
                 )
             """);
+            
+            // Create index for placed blocks cleanup
+            executeUpdate(connection, "CREATE INDEX IF NOT EXISTS idx_placed_blocks_time ON placed_blocks(placed_at)");
             
             // Global statistics table
             executeUpdate(connection, """

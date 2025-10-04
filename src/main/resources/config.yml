@@ -37,6 +37,16 @@ quests:
     # Track placed blocks to prevent mining cheese
     track-placed-blocks: true
     
+    # How long to track placed blocks before considering them "natural" (in hours)
+    # After this time, players can break their own placed blocks for quest progress
+    # Default: 24 hours
+    tracking-duration-hours: 24
+    
+    # How often to clean up old placed blocks from database (in minutes)
+    # Lower = more frequent cleanup, higher = less database load
+    # Default: 60 minutes (1 hour)
+    cleanup-interval-minutes: 60
+    
     # Only count mature crops
     mature-crops-only: true
     
@@ -48,6 +58,19 @@ quests:
     
     # Smelting rate limit (items per second)
     smelting-rate-limit: 10
+  
+  # Quest validation settings
+  validation:
+    # Maximum progress that can be added in a single update
+    # Helps prevent exploits that try to complete quests instantly
+    # Default: 10000
+    max-progress-per-update: 10000
+    
+    # Enable overflow protection (prevents integer overflow attacks)
+    enable-overflow-protection: true
+    
+    # Enable negative progress protection (prevents negative progress exploits)
+    enable-negative-protection: true
 
 # Reward Configuration
 rewards:

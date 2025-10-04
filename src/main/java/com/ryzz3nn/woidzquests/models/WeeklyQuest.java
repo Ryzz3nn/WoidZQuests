@@ -33,12 +33,36 @@ public class WeeklyQuest {
     }
 
     public void addProgress(int amount) {
-        if (!completed) {
-            this.currentProgress += amount;
-            if (this.currentProgress >= this.targetAmount) {
-                this.currentProgress = this.targetAmount;
-                this.completed = true;
-            }
+        // Validation: Prevent invalid progress updates
+        if (completed) {
+            return; // Can't add progress to completed quest
+        }
+        
+        if (amount <= 0) {
+            // Reject negative or zero progress
+            return;
+        }
+        
+        if (amount > 10000) {
+            // Reject suspiciously large progress updates (possible exploit)
+            return;
+        }
+        
+        // Check for integer overflow before adding
+        if (this.currentProgress > Integer.MAX_VALUE - amount) {
+            // Would overflow, cap at target
+            this.currentProgress = this.targetAmount;
+            this.completed = true;
+            return;
+        }
+        
+        // Safe to add progress
+        this.currentProgress += amount;
+        
+        // Check completion
+        if (this.currentProgress >= this.targetAmount) {
+            this.currentProgress = this.targetAmount; // Cap at target (no overflow)
+            this.completed = true;
         }
     }
 

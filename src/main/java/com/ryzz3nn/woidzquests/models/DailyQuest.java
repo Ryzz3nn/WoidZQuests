@@ -70,12 +70,36 @@ public class DailyQuest {
     }
     
     public void addProgress(int amount) {
-        if (!completed) {
-            currentProgress += amount;
-            if (currentProgress >= targetAmount) {
-                currentProgress = targetAmount;
-                completed = true;
-            }
+        // Validation: Prevent invalid progress updates
+        if (completed) {
+            return; // Can't add progress to completed quest
+        }
+        
+        if (amount <= 0) {
+            // Reject negative or zero progress
+            return;
+        }
+        
+        if (amount > 10000) {
+            // Reject suspiciously large progress updates (possible exploit)
+            return;
+        }
+        
+        // Check for integer overflow before adding
+        if (currentProgress > Integer.MAX_VALUE - amount) {
+            // Would overflow, cap at target
+            currentProgress = targetAmount;
+            completed = true;
+            return;
+        }
+        
+        // Safe to add progress
+        currentProgress += amount;
+        
+        // Check completion
+        if (currentProgress >= targetAmount) {
+            currentProgress = targetAmount; // Cap at target (no overflow)
+            completed = true;
         }
     }
     

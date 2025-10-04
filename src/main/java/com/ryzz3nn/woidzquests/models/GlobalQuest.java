@@ -38,16 +38,46 @@ public class GlobalQuest {
     }
 
     public void addProgress(UUID playerId, long amount) {
-        if (!completed) {
-            this.currentProgress += amount;
-            
-            // Track individual player contribution
-            playerContributions.put(playerId, playerContributions.getOrDefault(playerId, 0L) + amount);
-            
-            if (this.currentProgress >= this.targetAmount) {
-                this.currentProgress = this.targetAmount;
-                this.completed = true;
-            }
+        // Validation: Prevent invalid progress updates
+        if (completed) {
+            return; // Can't add progress to completed quest
+        }
+        
+        if (amount <= 0) {
+            // Reject negative or zero progress
+            return;
+        }
+        
+        if (amount > 100000L) {
+            // Reject suspiciously large progress updates (possible exploit)
+            return;
+        }
+        
+        // Check for long overflow before adding
+        if (this.currentProgress > Long.MAX_VALUE - amount) {
+            // Would overflow, cap at target
+            this.currentProgress = this.targetAmount;
+            this.completed = true;
+            return;
+        }
+        
+        // Check player contribution overflow
+        long currentContribution = playerContributions.getOrDefault(playerId, 0L);
+        if (currentContribution > Long.MAX_VALUE - amount) {
+            // Would overflow player contribution, skip this update
+            return;
+        }
+        
+        // Safe to add progress
+        this.currentProgress += amount;
+        
+        // Track individual player contribution
+        playerContributions.put(playerId, currentContribution + amount);
+        
+        // Check completion
+        if (this.currentProgress >= this.targetAmount) {
+            this.currentProgress = this.targetAmount; // Cap at target (no overflow)
+            this.completed = true;
         }
     }
 

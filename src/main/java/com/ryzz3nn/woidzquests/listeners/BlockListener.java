@@ -158,31 +158,96 @@ public class BlockListener implements Listener {
     }
     
     private boolean isPlayerPlaced(Block block) {
-        // TODO: Check if block was placed by a player using the database
-        // For now, return false (assume all blocks are naturally generated)
+        // Check if anti-cheese system is enabled
+        if (!plugin.getConfigManager().getBoolean("quests.anti-cheese.track-placed-blocks", true)) {
+            return false;
+        }
+        
+        // Check database to see if this block was placed by a player
+        try (var connection = plugin.getDatabaseManager().getConnection()) {
+            String sql = """
+                SELECT player_uuid, placed_at FROM placed_blocks 
+                WHERE world = ? AND x = ? AND y = ? AND z = ?
+            """;
+            
+            try (var statement = connection.prepareStatement(sql)) {
+                statement.setString(1, block.getWorld().getName());
+                statement.setInt(2, block.getX());
+                statement.setInt(3, block.getY());
+                statement.setInt(4, block.getZ());
+                
+                try (var resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        // Block was placed by a player
+                        // Check if it's too old (configurable expiry)
+                        long placedAt = resultSet.getLong("placed_at");
+                        long trackingDuration = plugin.getConfigManager().getInt("quests.anti-cheese.tracking-duration-hours", 24) * 60 * 60 * 1000L;
+                        long age = System.currentTimeMillis() - placedAt;
+                        
+                        if (age < trackingDuration) {
+                            // Block is tracked and still within tracking duration
+                            return true;
+                        } else {
+                            // Block is old enough to be considered "natural" again
+                            // Clean up the old entry
+                            removeTrackedBlock(block);
+                            return false;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            plugin.getLogger().warning("Failed to check if block was player-placed: " + e.getMessage());
+            // On error, assume block is natural (fail-safe)
+            return false;
+        }
+        
         return false;
     }
     
     private void trackPlacedBlock(Block block, Player player) {
-        // TODO: Track placed blocks in database for anti-cheese system
-        if (plugin.getConfigManager().getBoolean("quests.anti-cheese.track-placed-blocks", true)) {
-            plugin.getDatabaseManager().executeAsync(connection -> {
-                String sql = """
-                    INSERT OR REPLACE INTO placed_blocks (world, x, y, z, material, player_uuid, placed_at)
-                    VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-                """;
-                
-                try (var statement = connection.prepareStatement(sql)) {
-                    statement.setString(1, block.getWorld().getName());
-                    statement.setInt(2, block.getX());
-                    statement.setInt(3, block.getY());
-                    statement.setInt(4, block.getZ());
-                    statement.setString(5, block.getType().name());
-                    statement.setString(6, player.getUniqueId().toString());
-                    statement.executeUpdate();
-                }
-            });
+        if (!plugin.getConfigManager().getBoolean("quests.anti-cheese.track-placed-blocks", true)) {
+            return;
         }
+        
+        plugin.getDatabaseManager().executeAsync(connection -> {
+            String sql = """
+                INSERT OR REPLACE INTO placed_blocks (world, x, y, z, material, player_uuid, placed_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+            
+            try (var statement = connection.prepareStatement(sql)) {
+                statement.setString(1, block.getWorld().getName());
+                statement.setInt(2, block.getX());
+                statement.setInt(3, block.getY());
+                statement.setInt(4, block.getZ());
+                statement.setString(5, block.getType().name());
+                statement.setString(6, player.getUniqueId().toString());
+                statement.setLong(7, System.currentTimeMillis());
+                statement.executeUpdate();
+            } catch (Exception e) {
+                plugin.getLogger().warning("Failed to track placed block: " + e.getMessage());
+            }
+        });
+    }
+    
+    private void removeTrackedBlock(Block block) {
+        plugin.getDatabaseManager().executeAsync(connection -> {
+            String sql = """
+                DELETE FROM placed_blocks 
+                WHERE world = ? AND x = ? AND y = ? AND z = ?
+            """;
+            
+            try (var statement = connection.prepareStatement(sql)) {
+                statement.setString(1, block.getWorld().getName());
+                statement.setInt(2, block.getX());
+                statement.setInt(3, block.getY());
+                statement.setInt(4, block.getZ());
+                statement.executeUpdate();
+            } catch (Exception e) {
+                plugin.getLogger().warning("Failed to remove tracked block: " + e.getMessage());
+            }
+        });
     }
     
     private boolean isWoodPlanks(Material material) {

@@ -165,6 +165,9 @@ public final class WoidZQuests extends JavaPlugin {
             playtimeTracker = new PlaytimeTracker(this);
             playtimeTracker.startTracking();
             
+            // Start anti-cheese cleanup task
+            startAntiCheeseCleanup();
+            
             return true;
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, "Error initializing managers", e);
@@ -260,6 +263,46 @@ public final class WoidZQuests extends JavaPlugin {
         saveResource("shop.yml", false);
         
         getLogger().info("Quest configuration files saved to plugin folder!");
+    }
+    
+    /**
+     * Start periodic cleanup of old placed blocks from anti-cheese system
+     * This prevents the database from growing indefinitely
+     */
+    private void startAntiCheeseCleanup() {
+        if (!configManager.getBoolean("quests.anti-cheese.track-placed-blocks", true)) {
+            return; // Don't run cleanup if tracking is disabled
+        }
+        
+        // Get cleanup interval from config (default: 60 minutes)
+        int cleanupIntervalMinutes = configManager.getInt("quests.anti-cheese.cleanup-interval-minutes", 60);
+        long cleanupIntervalTicks = cleanupIntervalMinutes * 60 * 20L; // Convert to ticks
+        
+        // Get tracking duration from config (default: 24 hours)
+        int trackingDurationHours = configManager.getInt("quests.anti-cheese.tracking-duration-hours", 24);
+        long trackingDurationMs = trackingDurationHours * 60 * 60 * 1000L;
+        
+        // Schedule repeating cleanup task
+        Bukkit.getScheduler().runTaskTimerAsync(this, () -> {
+            databaseManager.executeAsync(connection -> {
+                String sql = "DELETE FROM placed_blocks WHERE placed_at < ?";
+                
+                try (var statement = connection.prepareStatement(sql)) {
+                    long cutoffTime = System.currentTimeMillis() - trackingDurationMs;
+                    statement.setLong(1, cutoffTime);
+                    
+                    int deletedCount = statement.executeUpdate();
+                    
+                    if (deletedCount > 0) {
+                        getLogger().info("[Anti-Cheese] Cleaned up " + deletedCount + " old placed blocks");
+                    }
+                } catch (Exception e) {
+                    getLogger().warning("[Anti-Cheese] Failed to clean up old placed blocks: " + e.getMessage());
+                }
+            });
+        }, cleanupIntervalTicks, cleanupIntervalTicks); // Run periodically
+        
+        getLogger().info("[Anti-Cheese] Cleanup task started (interval: " + cleanupIntervalMinutes + " minutes)");
     }
     
     // Getters for managers
