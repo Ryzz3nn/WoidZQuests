@@ -1,0 +1,1585 @@
+# ========================================
+# WoidZQuests - Daily Quests Configuration  
+# ========================================
+# Daily quests reset every day at midnight (configurable)
+# These are short-term objectives with moderate rewards
+# Players can have multiple daily quests active
+# ALL TEXT USES MINIMESSAGE FORMAT: <color> instead of &color
+#
+# Quest Format:
+# quest_id:
+#   name: "Display name"
+#   description: "Description with {target} placeholder"
+#   category: GATHERING/COMBAT/CRAFTING/EXPLORATION/SURVIVAL/JOBS/BUILDING/SPECIAL
+#   type: MINING/WOODCUTTING/FARMING/FISHING/HUNTING/BUILDING/CRAFTING/etc
+#   difficulty: EASY/MEDIUM/HARD/EXTREME
+#   target_min: 50    # Minimum target for this quest
+#   target_max: 200   # Maximum target (random between min/max)
+#   requirements: # Optional filters
+#   rewards: # Rewards scaled by difficulty
+#   weight: 10  # Selection probability (higher = more likely)
+#   enabled: true
+
+# ========================================
+# DAILY MINING QUESTS
+# ========================================
+
+daily_coal_miner:
+  name: "<gray>Coal <yellow>Collector"
+  description: "<gray>Mine <yellow>{target} Coal Ore <gray>for fuel!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 25
+  target_max: 75
+  requirements:
+    materials: ["COAL_ORE", "DEEPSLATE_COAL_ORE"]
+    worlds: ["world"]
+  rewards:
+    money: [50, 150]
+    experience: [25, 75]
+    quest_points: 1
+    commands:
+      - "qp give {player} 1"
+    items:
+      - "COAL 16"
+      - "TORCH 32"
+  weight: 20
+  enabled: true
+
+daily_iron_seeker:
+  name: "<white>Iron <aqua>Seeker"
+  description: "<gray>Extract <white>{target} Iron Ore <gray>from the ground!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 15
+  target_max: 50
+  requirements:
+    materials: ["IRON_ORE", "DEEPSLATE_IRON_ORE"]
+    y_max: 64
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "IRON_INGOT 8"
+  weight: 15
+  enabled: true
+
+daily_gold_hunter:
+  name: "<gold>Gold <yellow>Hunter"
+  description: "<gray>Find <gold>{target} Gold Ore <gray>in the depths!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 8
+  target_max: 25
+  requirements:
+    materials: ["GOLD_ORE", "DEEPSLATE_GOLD_ORE", "NETHER_GOLD_ORE"]
+  rewards:
+    money: [200, 400]
+    experience: [75, 150]
+    items:
+      - "GOLD_INGOT 6"
+      - "GOLDEN_APPLE 1"
+  weight: 10
+  enabled: true
+
+daily_diamond_finder:
+  name: "<aqua>Diamond <light_purple>Finder"
+  description: "<gray>Discover <aqua>{target} Diamond Ore <gray>below!"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target_min: 2
+  target_max: 8
+  requirements:
+    materials: ["DIAMOND_ORE", "DEEPSLATE_DIAMOND_ORE"]
+    y_max: 16
+  rewards:
+    money: [500, 1000]
+    experience: [150, 300]
+    items:
+      - "DIAMOND 4"
+      - "EXPERIENCE_BOTTLE 8"
+  weight: 5
+  enabled: true
+
+daily_stone_breaker:
+  name: "<gray>Stone <white>Breaker"
+  description: "<gray>Break <gray>{target} stone blocks <gray>while mining!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 100
+  target_max: 300
+  requirements:
+    materials: ["STONE", "COBBLESTONE", "DEEPSLATE", "COBBLED_DEEPSLATE"]
+  rewards:
+    money: [75, 200]
+    experience: [40, 100]
+    items:
+      - "COBBLESTONE 64"
+  weight: 18
+  enabled: true
+
+# ========================================
+# DAILY FARMING QUESTS
+# ========================================
+
+daily_wheat_farmer:
+  name: "<yellow>Wheat <green>Farmer"
+  description: "<gray>Harvest <yellow>{target} Wheat <gray>from your fields!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 50
+  target_max: 150
+  requirements:
+    materials: ["WHEAT"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "BREAD 32"
+      - "WHEAT_SEEDS 64"
+  weight: 15
+  enabled: true
+
+daily_carrot_grower:
+  name: "<gold>Carrot <green>Grower"
+  description: "<gray>Grow <gold>{target} Carrots <gray>for nutrition!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 40
+  target_max: 120
+  requirements:
+    materials: ["CARROTS"]
+  rewards:
+    money: [70, 180]
+    experience: [35, 90]
+    items:
+      - "GOLDEN_CARROT 8"
+      - "CARROT 32"
+  weight: 12
+  enabled: true
+
+daily_potato_harvester:
+  name: "<yellow>Potato <green>Harvester"
+  description: "<gray>Harvest <yellow>{target} Potatoes <gray>from the soil!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 40
+  target_max: 120
+  requirements:
+    materials: ["POTATOES"]
+  rewards:
+    money: [70, 180]
+    experience: [35, 90]
+    items:
+      - "BAKED_POTATO 16"
+      - "POTATO 32"
+  weight: 12
+  enabled: true
+
+daily_beetroot_cultivator:
+  name: "<dark_red>Beetroot <green>Cultivator"
+  description: "<gray>Cultivate <dark_red>{target} Beetroots <gray>carefully!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 30
+  target_max: 90
+  requirements:
+    materials: ["BEETROOTS"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "BEETROOT 24"
+      - "BEETROOT_SOUP 4"
+  weight: 8
+  enabled: true
+
+daily_berry_picker:
+  name: "<red>Berry <green>Picker"
+  description: "<gray>Pick <red>{target} Sweet Berries <gray>from bushes!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 32
+  target_max: 96
+  requirements:
+    materials: ["SWEET_BERRIES"]
+    biomes: ["taiga", "snowy_taiga"]
+  rewards:
+    money: [120, 300]
+    experience: [60, 150]
+    items:
+      - "SWEET_BERRIES 64"
+      - "HONEY_BOTTLE 4"
+  weight: 7
+  enabled: true
+
+# ========================================
+# DAILY WOODCUTTING QUESTS
+# ========================================
+
+daily_oak_logger:
+  name: "<gold>Oak <green>Logger"
+  description: "<gray>Chop <gold>{target} Oak Logs <gray>from forests!"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: EASY
+  target_min: 32
+  target_max: 96
+  requirements:
+    materials: ["OAK_LOG", "STRIPPED_OAK_LOG"]
+    biomes: ["forest", "plains"]
+  rewards:
+    money: [60, 180]
+    experience: [30, 90]
+    items:
+      - "OAK_PLANKS 64"
+      - "STICK 32"
+  weight: 15
+  enabled: true
+
+daily_spruce_cutter:
+  name: "<dark_green>Spruce <green>Cutter"
+  description: "<gray>Cut <dark_green>{target} Spruce Logs <gray>from taiga!"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: EASY
+  target_min: 24
+  target_max: 72
+  requirements:
+    materials: ["SPRUCE_LOG", "STRIPPED_SPRUCE_LOG"]
+    biomes: ["taiga", "snowy_taiga"]
+  rewards:
+    money: [70, 200]
+    experience: [35, 100]
+    items:
+      - "SPRUCE_PLANKS 48"
+  weight: 12
+  enabled: true
+
+daily_birch_harvester:
+  name: "<white>Birch <green>Harvester"
+  description: "<gray>Harvest <white>{target} Birch Logs <gray>gracefully!"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: EASY
+  target_min: 24
+  target_max: 72
+  requirements:
+    materials: ["BIRCH_LOG", "STRIPPED_BIRCH_LOG"]
+    biomes: ["birch_forest"]
+  rewards:
+    money: [80, 220]
+    experience: [40, 110]
+    items:
+      - "BIRCH_PLANKS 48"
+  weight: 10
+  enabled: true
+
+daily_jungle_explorer:
+  name: "<green>Jungle <dark_green>Explorer"
+  description: "<gray>Explore and cut <green>{target} Jungle Logs<gray>!"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: MEDIUM
+  target_min: 16
+  target_max: 48
+  requirements:
+    materials: ["JUNGLE_LOG", "STRIPPED_JUNGLE_LOG"]
+    biomes: ["jungle", "sparse_jungle"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "JUNGLE_PLANKS 32"
+      - "COCOA_BEANS 16"
+  weight: 6
+  enabled: true
+
+# ========================================
+# DAILY FISHING QUESTS
+# ========================================
+
+daily_cod_catcher:
+  name: "<blue>Cod <aqua>Catcher"
+  description: "<gray>Catch <blue>{target} Cod <gray>from the ocean!"
+  category: GATHERING
+  type: FISHING
+  difficulty: EASY
+  target_min: 10
+  target_max: 30
+  requirements:
+    items: ["COD"]
+    environment: "WATER"
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "COOKED_COD 16"
+      - "FISHING_ROD 1"
+  weight: 15
+  enabled: true
+
+daily_salmon_fisher:
+  name: "<light_purple>Salmon <aqua>Fisher"
+  description: "<gray>Fish <light_purple>{target} Salmon <gray>from rivers!"
+  category: GATHERING
+  type: FISHING
+  difficulty: EASY
+  target_min: 8
+  target_max: 24
+  requirements:
+    items: ["SALMON"]
+    biomes: ["river", "frozen_river"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "COOKED_SALMON 12"
+  weight: 12
+  enabled: true
+
+daily_tropical_collector:
+  name: "<yellow>Tropical <aqua>Collector"
+  description: "<gray>Collect <yellow>{target} Tropical Fish <gray>varieties!"
+  category: GATHERING
+  type: FISHING
+  difficulty: MEDIUM
+  target_min: 5
+  target_max: 15
+  requirements:
+    items: ["TROPICAL_FISH"]
+    biomes: ["warm_ocean", "lukewarm_ocean"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "TROPICAL_FISH 8"
+      - "BUCKET 2"
+  weight: 8
+  enabled: true
+
+daily_treasure_seeker:
+  name: "<gold>Treasure <aqua>Seeker"
+  description: "<gray>Fish up <gold>{target} treasure items<gray>!"
+  category: GATHERING
+  type: FISHING
+  difficulty: HARD
+  target_min: 1
+  target_max: 4
+  requirements:
+    treasure_only: true
+    environment: "WATER"
+  rewards:
+    money: [400, 800]
+    experience: [150, 300]
+    items:
+      - "ENCHANTED_BOOK 1"
+      - "NAME_TAG 2"
+  weight: 4
+  enabled: true
+
+# ========================================
+# DAILY COMBAT QUESTS
+# ========================================
+
+daily_zombie_slayer:
+  name: "<dark_green>Zombie <red>Slayer"
+  description: "<gray>Slay <dark_green>{target} Zombies <gray>in the night!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EASY
+  target_min: 15
+  target_max: 40
+  requirements:
+    mob_types: ["ZOMBIE", "ZOMBIE_VILLAGER", "HUSK"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "ROTTEN_FLESH 16"
+      - "IRON_SWORD 1"
+  weight: 15
+  enabled: true
+
+daily_skeleton_hunter:
+  name: "<white>Skeleton <red>Hunter"
+  description: "<gray>Hunt <white>{target} Skeletons <gray>for their bones!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EASY
+  target_min: 12
+  target_max: 35
+  requirements:
+    mob_types: ["SKELETON", "STRAY"]
+  rewards:
+    money: [120, 280]
+    experience: [60, 140]
+    items:
+      - "BONE 32"
+      - "ARROW 64"
+  weight: 12
+  enabled: true
+
+daily_spider_exterminator:
+  name: "<dark_gray>Spider <red>Exterminator"
+  description: "<gray>Exterminate <dark_gray>{target} Spiders <gray>from caves!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 8
+  target_max: 25
+  requirements:
+    mob_types: ["SPIDER", "CAVE_SPIDER"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "STRING 16"
+      - "SPIDER_EYE 8"
+  weight: 10
+  enabled: true
+
+daily_creeper_defuser:
+  name: "<green>Creeper <red>Defuser"
+  description: "<gray>Defuse <green>{target} Creepers <gray>safely!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 6
+  target_max: 18
+  requirements:
+    mob_types: ["CREEPER"]
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    items:
+      - "GUNPOWDER 12"
+      - "TNT 4"
+  weight: 8
+  enabled: true
+
+daily_enderman_stalker:
+  name: "<dark_purple>Enderman <red>Stalker"
+  description: "<gray>Stalk <dark_purple>{target} Endermen <gray>for pearls!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target_min: 2
+  target_max: 8
+  requirements:
+    mob_types: ["ENDERMAN"]
+  rewards:
+    money: [300, 600]
+    experience: [150, 300]
+    items:
+      - "ENDER_PEARL 4"
+      - "ENCHANTED_BOOK 1"
+  weight: 5
+  enabled: true
+
+# ========================================
+# DAILY BUILDING QUESTS
+# ========================================
+
+daily_stone_builder:
+  name: "<gray>Stone <yellow>Builder"
+  description: "<gray>Place <gray>{target} stone blocks <gray>for construction!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 100
+  target_max: 300
+  requirements:
+    materials: ["STONE", "COBBLESTONE", "STONE_BRICKS", "SMOOTH_STONE"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "STONE 64"
+      - "STONE_PICKAXE 1"
+  weight: 15
+  enabled: true
+
+daily_wood_framer:
+  name: "<gold>Wood <yellow>Framer"
+  description: "<gray>Frame with <gold>{target} wooden planks<gray>!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 75
+  target_max: 225
+  requirements:
+    materials: ["OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS"]
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "OAK_PLANKS 48"
+      - "IRON_AXE 1"
+  weight: 12
+  enabled: true
+
+daily_glass_artist:
+  name: "<aqua>Glass <yellow>Artist"
+  description: "<gray>Create with <aqua>{target} glass blocks<gray>!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: MEDIUM
+  target_min: 32
+  target_max: 96
+  requirements:
+    materials: ["GLASS", "WHITE_STAINED_GLASS", "LIGHT_BLUE_STAINED_GLASS", "BLUE_STAINED_GLASS"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "GLASS 64"
+      - "GLASS_PANE 32"
+  weight: 8
+  enabled: true
+
+# ========================================
+# DAILY CRAFTING QUESTS
+# ========================================
+
+daily_tool_crafter:
+  name: "<yellow>Tool <gold>Crafter"
+  description: "<gray>Craft <yellow>{target} tools <gray>for utility!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: EASY
+  target_min: 5
+  target_max: 15
+  requirements:
+    materials: ["WOODEN_PICKAXE", "WOODEN_AXE", "WOODEN_SHOVEL", "STONE_PICKAXE", "STONE_AXE", "STONE_SHOVEL"]
+  rewards:
+    money: [120, 300]
+    experience: [60, 150]
+    items:
+      - "IRON_INGOT 16"
+      - "STICK 32"
+  weight: 12
+  enabled: true
+
+daily_food_preparer:
+  name: "<red>Food <gold>Preparer"
+  description: "<gray>Prepare <red>{target} food items <gray>for sustenance!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: EASY
+  target_min: 20
+  target_max: 60
+  requirements:
+    materials: ["BREAD", "COOKED_BEEF", "COOKED_PORKCHOP", "COOKED_CHICKEN", "BAKED_POTATO"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "COOKED_BEEF 16"
+      - "BREAD 32"
+  weight: 10
+  enabled: true
+
+daily_armor_smith:
+  name: "<blue>Armor <gold>Smith"
+  description: "<gray>Smith <blue>{target} armor pieces <gray>for protection!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: MEDIUM
+  target_min: 3
+  target_max: 10
+  requirements:
+    materials: ["LEATHER_HELMET", "LEATHER_CHESTPLATE", "LEATHER_LEGGINGS", "LEATHER_BOOTS", "IRON_HELMET", "IRON_CHESTPLATE"]
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    items:
+      - "IRON_INGOT 24"
+      - "LEATHER 16"
+  weight: 7
+  enabled: true
+
+# ========================================
+# DAILY EXPLORATION QUESTS
+# ========================================
+
+daily_wanderer:
+  name: "<aqua>Daily <green>Wanderer"
+  description: "<gray>Travel <aqua>{target} blocks <gray>exploring the world!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: EASY
+  target_min: 1000
+  target_max: 3000
+  requirements:
+    worlds: ["world"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "COOKED_BEEF 16"
+      - "MAP 2"
+  weight: 12
+  enabled: true
+
+daily_biome_scout:
+  name: "<green>Biome <aqua>Scout"
+  description: "<gray>Discover <green>{target} different biomes <gray>today!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target_min: 3
+  target_max: 8
+  requirements:
+    biome_discovery: true
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    items:
+      - "COMPASS 2"
+      - "MAP 4"
+  weight: 8
+  enabled: true
+
+daily_nether_explorer:
+  name: "<red>Nether <dark_red>Explorer"
+  description: "<gray>Explore <red>{target} blocks <gray>in the Nether!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: HARD
+  target_min: 500
+  target_max: 1500
+  requirements:
+    worlds: ["world_nether"]
+  rewards:
+    money: [300, 600]
+    experience: [150, 300]
+    items:
+      - "FIRE_RESISTANCE_POTION 5"
+      - "GOLDEN_APPLE 4"
+  weight: 5
+  enabled: true
+
+# ========================================
+# DAILY SURVIVAL QUESTS
+# ========================================
+
+daily_survivor:
+  name: "<green>Daily <yellow>Survivor"
+  description: "<gray>Survive for <green>{target} minutes <gray>without dying!"
+  category: SURVIVAL
+  type: SURVIVAL
+  difficulty: MEDIUM
+  target_min: 60   # 1 hour
+  target_max: 180  # 3 hours
+  requirements:
+    no_death: true
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    items:
+      - "GOLDEN_APPLE 2"
+      - "COOKED_BEEF 16"
+  weight: 8
+  enabled: true
+
+daily_playtime_warrior:
+  name: "<yellow>Playtime <gold>Warrior"
+  description: "<gray>Play for <yellow>{target} minutes <gray>today!"
+  category: SURVIVAL
+  type: TIMED
+  difficulty: EASY
+  target_min: 30   # 30 minutes
+  target_max: 120  # 2 hours
+  requirements:
+    playtime: true
+  rewards:
+    money: [150, 300]
+    experience: [75, 150]
+    items:
+      - "EXPERIENCE_BOTTLE 8"
+      - "CAKE 1"
+  weight: 15
+  enabled: true
+
+# ========================================
+# DAILY TRAVEL QUESTS
+# ========================================
+
+daily_land_wanderer:
+  name: "<green>Land <aqua>Wanderer"
+  description: "<gray>Travel <green>{target} blocks <gray>on foot!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: EASY
+  target_min: 500
+  target_max: 1500
+  requirements:
+    movement_type: "WALK"
+    worlds: ["world"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "LEATHER_BOOTS 1"
+      - "COOKED_BEEF 16"
+  weight: 15
+  enabled: true
+
+daily_swimmer:
+  name: "<blue>Daily <aqua>Swimmer"
+  description: "<gray>Swim <blue>{target} blocks <gray>through water!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target_min: 300
+  target_max: 800
+  requirements:
+    movement_type: "SWIM"
+    environment: "WATER"
+  rewards:
+    money: [120, 280]
+    experience: [60, 140]
+    items:
+      - "POTION 2 {Potion:\"minecraft:water_breathing\"}"
+      - "COOKED_COD 12"
+  weight: 10
+  enabled: true
+
+daily_sky_glider:
+  name: "<white>Sky <light_purple>Glider"
+  description: "<gray>Glide <white>{target} blocks <gray>with your Elytra!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: HARD
+  target_min: 1000
+  target_max: 3000
+  requirements:
+    movement_type: "ELYTRA"
+    worlds: ["world"]
+  rewards:
+    money: [300, 600]
+    experience: [150, 300]
+    items:
+      - "FIREWORK_ROCKET 32"
+      - "PHANTOM_MEMBRANE 4"
+  weight: 6
+  enabled: true
+
+daily_rail_rider:
+  name: "<gray>Rail <yellow>Rider"
+  description: "<gray>Travel <gray>{target} blocks <gray>by minecart!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target_min: 500
+  target_max: 1200
+  requirements:
+    movement_type: "MINECART"
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "RAIL 64"
+      - "MINECART 2"
+  weight: 8
+  enabled: true
+
+daily_boat_captain:
+  name: "<blue>Boat <aqua>Captain"
+  description: "<gray>Sail <blue>{target} blocks <gray>by boat!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: EASY
+  target_min: 400
+  target_max: 1000
+  requirements:
+    movement_type: "BOAT"
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "OAK_BOAT 3"
+      - "COOKED_SALMON 16"
+  weight: 12
+  enabled: true
+
+# ========================================
+# DAILY PLACE QUESTS
+# ========================================
+
+daily_torch_lighter:
+  name: "<yellow>Torch <gold>Lighter"
+  description: "<gray>Place <yellow>{target} torches <gray>to light the way!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 64
+  target_max: 192
+  requirements:
+    materials: ["TORCH", "SOUL_TORCH", "REDSTONE_TORCH"]
+  rewards:
+    money: [60, 180]
+    experience: [30, 90]
+    items:
+      - "TORCH 128"
+      - "COAL 32"
+  weight: 15
+  enabled: true
+
+daily_crop_planter:
+  name: "<green>Crop <yellow>Planter"
+  description: "<gray>Plant <green>{target} crops <gray>for your farm!"
+  category: BUILDING
+  type: FARMING
+  difficulty: EASY
+  target_min: 50
+  target_max: 150
+  requirements:
+    materials: ["WHEAT_SEEDS", "CARROT", "POTATO", "BEETROOT_SEEDS"]
+  rewards:
+    money: [70, 190]
+    experience: [35, 95]
+    items:
+      - "WHEAT_SEEDS 64"
+      - "BONE_MEAL 32"
+  weight: 14
+  enabled: true
+
+daily_sapling_planter:
+  name: "<dark_green>Sapling <green>Planter"
+  description: "<gray>Plant <dark_green>{target} saplings <gray>to grow forests!"
+  category: BUILDING
+  type: FARMING
+  difficulty: EASY
+  target_min: 20
+  target_max: 60
+  requirements:
+    materials: ["OAK_SAPLING", "SPRUCE_SAPLING", "BIRCH_SAPLING", "JUNGLE_SAPLING", "ACACIA_SAPLING", "DARK_OAK_SAPLING"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "OAK_SAPLING 16"
+      - "BONE_MEAL 24"
+  weight: 12
+  enabled: true
+
+daily_redstone_engineer:
+  name: "<red>Redstone <gold>Engineer"
+  description: "<gray>Place <red>{target} redstone components <gray>for contraptions!"
+  category: BUILDING
+  type: CRAFTING
+  difficulty: MEDIUM
+  target_min: 15
+  target_max: 45
+  requirements:
+    materials: ["REDSTONE", "REPEATER", "COMPARATOR", "REDSTONE_TORCH", "PISTON", "STICKY_PISTON", "OBSERVER"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "REDSTONE 64"
+      - "REPEATER 16"
+  weight: 8
+  enabled: true
+
+daily_decorator:
+  name: "<light_purple>Daily <yellow>Decorator"
+  description: "<gray>Place <light_purple>{target} decorative items <gray>to beautify!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: MEDIUM
+  target_min: 20
+  target_max: 60
+  requirements:
+    materials: ["PAINTING", "ITEM_FRAME", "ARMOR_STAND", "FLOWER_POT", "BANNER", "CARPET"]
+  rewards:
+    money: [120, 300]
+    experience: [60, 150]
+    items:
+      - "PAINTING 8"
+      - "ITEM_FRAME 16"
+  weight: 9
+  enabled: true
+
+daily_bed_maker:
+  name: "<red>Bed <yellow>Maker"
+  description: "<gray>Place <red>{target} beds <gray>for rest stops!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 5
+  target_max: 15
+  requirements:
+    materials: ["WHITE_BED", "RED_BED", "BLUE_BED", "GREEN_BED", "YELLOW_BED", "BLACK_BED"]
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "WHITE_BED 3"
+      - "WHITE_WOOL 16"
+  weight: 11
+  enabled: true
+
+daily_utility_placer:
+  name: "<gold>Utility <yellow>Placer"
+  description: "<gray>Place <gold>{target} utility blocks <gray>for functionality!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 10
+  target_max: 30
+  requirements:
+    materials: ["CRAFTING_TABLE", "FURNACE", "CHEST", "BARREL", "ANVIL", "ENCHANTING_TABLE", "BREWING_STAND"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "CRAFTING_TABLE 4"
+      - "FURNACE 4"
+  weight: 10
+  enabled: true
+
+# ========================================
+# DAILY PLANT QUESTS
+# ========================================
+
+daily_flower_gardener:
+  name: "<light_purple>Flower <green>Gardener"
+  description: "<gray>Plant <light_purple>{target} flowers <gray>to create a garden!"
+  category: BUILDING
+  type: FARMING
+  difficulty: EASY
+  target_min: 30
+  target_max: 90
+  requirements:
+    materials: ["DANDELION", "POPPY", "BLUE_ORCHID", "ALLIUM", "AZURE_BLUET", "TULIP", "OXEYE_DAISY", "CORNFLOWER", "LILY_OF_THE_VALLEY"]
+  rewards:
+    money: [70, 190]
+    experience: [35, 95]
+    items:
+      - "BONE_MEAL 32"
+      - "FLOWER_POT 16"
+  weight: 12
+  enabled: true
+
+daily_mushroom_farmer:
+  name: "<red>Mushroom <green>Farmer"
+  description: "<gray>Plant <red>{target} mushrooms <gray>in the dark!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 20
+  target_max: 60
+  requirements:
+    materials: ["RED_MUSHROOM", "BROWN_MUSHROOM"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "RED_MUSHROOM 16"
+      - "BROWN_MUSHROOM 16"
+      - "MUSHROOM_STEW 8"
+  weight: 8
+  enabled: true
+
+daily_sugarcane_cultivator:
+  name: "<green>Sugarcane <yellow>Cultivator"
+  description: "<gray>Plant <green>{target} sugarcane <gray>by water!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 40
+  target_max: 120
+  requirements:
+    materials: ["SUGAR_CANE"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "SUGAR_CANE 64"
+      - "PAPER 32"
+  weight: 11
+  enabled: true
+
+daily_bamboo_planter:
+  name: "<dark_green>Bamboo <green>Planter"
+  description: "<gray>Plant <dark_green>{target} bamboo <gray>stalks!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 50
+  target_max: 150
+  requirements:
+    materials: ["BAMBOO"]
+    biomes: ["jungle", "bamboo_jungle"]
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "BAMBOO 128"
+      - "STICK 32"
+  weight: 10
+  enabled: true
+
+daily_cactus_farmer:
+  name: "<dark_green>Cactus <green>Farmer"
+  description: "<gray>Plant <dark_green>{target} cactus <gray>in the desert!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 25
+  target_max: 75
+  requirements:
+    materials: ["CACTUS"]
+    biomes: ["desert"]
+  rewards:
+    money: [110, 270]
+    experience: [55, 135]
+    items:
+      - "CACTUS 32"
+      - "GREEN_DYE 16"
+  weight: 8
+  enabled: true
+
+daily_kelp_cultivator:
+  name: "<dark_green>Kelp <aqua>Cultivator"
+  description: "<gray>Plant <dark_green>{target} kelp <gray>underwater!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 30
+  target_max: 90
+  requirements:
+    materials: ["KELP"]
+    environment: "WATER"
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "KELP 64"
+      - "DRIED_KELP 32"
+  weight: 7
+  enabled: true
+
+# ========================================
+# DAILY COLLECT QUESTS
+# ========================================
+
+daily_meat_collector:
+  name: "<red>Meat <gold>Collector"
+  description: "<gray>Collect <red>{target} raw meat <gray>from animals!"
+  category: GATHERING
+  type: HUNTING
+  difficulty: EASY
+  target_min: 20
+  target_max: 60
+  requirements:
+    items: ["BEEF", "PORKCHOP", "CHICKEN", "MUTTON", "RABBIT"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "COOKED_BEEF 16"
+      - "STONE_SWORD 1"
+  weight: 13
+  enabled: true
+
+daily_wool_gatherer:
+  name: "<white>Wool <yellow>Gatherer"
+  description: "<gray>Gather <white>{target} wool <gray>from sheep!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 32
+  target_max: 96
+  requirements:
+    items: ["WHITE_WOOL", "LIGHT_GRAY_WOOL", "GRAY_WOOL", "BLACK_WOOL", "BROWN_WOOL"]
+  rewards:
+    money: [70, 190]
+    experience: [35, 95]
+    items:
+      - "SHEARS 1"
+      - "WHITE_WOOL 16"
+  weight: 12
+  enabled: true
+
+daily_leather_hunter:
+  name: "<gold>Leather <yellow>Hunter"
+  description: "<gray>Hunt for <gold>{target} leather <gray>from animals!"
+  category: GATHERING
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 15
+  target_max: 45
+  requirements:
+    items: ["LEATHER"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "LEATHER 24"
+      - "SADDLE 1"
+  weight: 9
+  enabled: true
+
+daily_pearl_hunter:
+  name: "<dark_purple>Pearl <light_purple>Hunter"
+  description: "<gray>Hunt for <dark_purple>{target} ender pearls<gray>!"
+  category: GATHERING
+  type: HUNTING
+  difficulty: HARD
+  target_min: 5
+  target_max: 15
+  requirements:
+    items: ["ENDER_PEARL"]
+  rewards:
+    money: [250, 500]
+    experience: [125, 250]
+    items:
+      - "ENDER_PEARL 8"
+      - "ENCHANTED_BOOK 1"
+  weight: 6
+  enabled: true
+
+# ========================================
+# DAILY COOKING QUESTS
+# ========================================
+
+daily_chef_fish:
+  name: "<blue>Fish <gold>Chef"
+  description: "<gray>Cook <blue>{target} fish <gray>to perfection!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: EASY
+  target_min: 15
+  target_max: 45
+  requirements:
+    materials: ["COOKED_COD", "COOKED_SALMON"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "COOKED_COD 24"
+      - "FISHING_ROD 1"
+  weight: 12
+  enabled: true
+
+daily_chef_meat:
+  name: "<red>Meat <gold>Chef"
+  description: "<gray>Cook <red>{target} meat items <gray>for meals!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: EASY
+  target_min: 20
+  target_max: 60
+  requirements:
+    materials: ["COOKED_BEEF", "COOKED_PORKCHOP", "COOKED_CHICKEN", "COOKED_MUTTON", "COOKED_RABBIT"]
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "COOKED_BEEF 32"
+      - "FURNACE 2"
+  weight: 13
+  enabled: true
+
+daily_baker:
+  name: "<yellow>Daily <gold>Baker"
+  description: "<gray>Bake <yellow>{target} food items <gray>for the village!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: MEDIUM
+  target_min: 10
+  target_max: 30
+  requirements:
+    materials: ["BREAD", "CAKE", "PUMPKIN_PIE", "COOKIE"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "CAKE 4"
+      - "BREAD 32"
+  weight: 9
+  enabled: true
+
+# ========================================
+# DAILY SMELTING QUESTS
+# ========================================
+
+daily_ore_smelter:
+  name: "<gold>Ore <red>Smelter"
+  description: "<gray>Smelt <gold>{target} ores <gray>into ingots!"
+  category: CRAFTING
+  type: SMELTING
+  difficulty: MEDIUM
+  target_min: 30
+  target_max: 90
+  requirements:
+    materials: ["IRON_INGOT", "GOLD_INGOT", "COPPER_INGOT"]
+    from_smelting: true
+  rewards:
+    money: [120, 300]
+    experience: [60, 150]
+    items:
+      - "IRON_INGOT 32"
+      - "BLAST_FURNACE 1"
+  weight: 10
+  enabled: true
+
+daily_stone_smelter:
+  name: "<gray>Stone <red>Smelter"
+  description: "<gray>Smelt <gray>{target} stone <gray>blocks!"
+  category: CRAFTING
+  type: SMELTING
+  difficulty: EASY
+  target_min: 64
+  target_max: 192
+  requirements:
+    materials: ["STONE", "SMOOTH_STONE"]
+    from_smelting: true
+  rewards:
+    money: [70, 190]
+    experience: [35, 95]
+    items:
+      - "SMOOTH_STONE 64"
+      - "FURNACE 2"
+  weight: 11
+  enabled: true
+
+daily_glass_maker:
+  name: "<aqua>Glass <yellow>Maker"
+  description: "<gray>Smelt <aqua>{target} sand <gray>into glass!"
+  category: CRAFTING
+  type: SMELTING
+  difficulty: EASY
+  target_min: 40
+  target_max: 120
+  requirements:
+    materials: ["GLASS"]
+    from_smelting: true
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "GLASS 64"
+      - "SAND 32"
+  weight: 10
+  enabled: true
+
+daily_brick_maker:
+  name: "<red>Brick <gold>Maker"
+  description: "<gray>Smelt <red>{target} clay <gray>into bricks!"
+  category: CRAFTING
+  type: SMELTING
+  difficulty: MEDIUM
+  target_min: 25
+  target_max: 75
+  requirements:
+    materials: ["BRICK"]
+    from_smelting: true
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "BRICKS 64"
+      - "CLAY_BALL 32"
+  weight: 8
+  enabled: true
+
+# ========================================
+# DAILY ALCHEMY QUESTS
+# ========================================
+
+daily_brewer:
+  name: "<light_purple>Daily <dark_purple>Brewer"
+  description: "<gray>Brew <light_purple>{target} potions <gray>with alchemy!"
+  category: CRAFTING
+  type: BREWING
+  difficulty: MEDIUM
+  target_min: 5
+  target_max: 15
+  requirements:
+    any_potion: true
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "BREWING_STAND 1"
+      - "BLAZE_POWDER 16"
+      - "GLASS_BOTTLE 16"
+  weight: 8
+  enabled: true
+
+daily_enchanter:
+  name: "<light_purple>Daily <aqua>Enchanter"
+  description: "<gray>Enchant <light_purple>{target} items <gray>with magic!"
+  category: CRAFTING
+  type: ENCHANTING
+  difficulty: MEDIUM
+  target_min: 3
+  target_max: 10
+  requirements:
+    any_enchant: true
+  rewards:
+    money: [180, 400]
+    experience: [90, 200]
+    items:
+      - "ENCHANTED_BOOK 2"
+      - "LAPIS_LAZULI 32"
+      - "EXPERIENCE_BOTTLE 8"
+  weight: 7
+  enabled: true
+
+# ========================================
+# DAILY NETHER QUESTS
+# ========================================
+
+daily_netherrack_miner:
+  name: "<dark_red>Netherrack <red>Miner"
+  description: "<gray>Mine <dark_red>{target} netherrack <gray>in the Nether!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 100
+  target_max: 300
+  requirements:
+    materials: ["NETHERRACK"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [90, 220]
+    experience: [45, 110]
+    items:
+      - "NETHERRACK 64"
+      - "FIRE_RESISTANCE_POTION 3"
+  weight: 10
+  enabled: true
+
+daily_quartz_miner:
+  name: "<white>Quartz <gold>Miner"
+  description: "<gray>Mine <white>{target} Nether Quartz <gray>from the depths!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 30
+  target_max: 90
+  requirements:
+    materials: ["NETHER_QUARTZ_ORE"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "QUARTZ 32"
+      - "FIRE_RESISTANCE_POTION 5"
+  weight: 8
+  enabled: true
+
+daily_blaze_hunter:
+  name: "<yellow>Blaze <red>Hunter"
+  description: "<gray>Hunt <yellow>{target} Blazes <gray>for their rods!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target_min: 8
+  target_max: 24
+  requirements:
+    mob_types: ["BLAZE"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [300, 600]
+    experience: [150, 300]
+    items:
+      - "BLAZE_ROD 8"
+      - "FIRE_RESISTANCE_POTION 8"
+      - "GOLDEN_APPLE 4"
+  weight: 5
+  enabled: true
+
+# ========================================
+# DAILY MISC QUESTS
+# ========================================
+
+daily_obsidian_breaker:
+  name: "<dark_purple>Obsidian <yellow>Breaker"
+  description: "<gray>Break <dark_purple>{target} obsidian <gray>blocks!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 10
+  target_max: 30
+  requirements:
+    materials: ["OBSIDIAN"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    items:
+      - "OBSIDIAN 16"
+      - "DIAMOND_PICKAXE 1"
+  weight: 7
+  enabled: true
+
+daily_gravel_digger:
+  name: "<gray>Gravel <yellow>Digger"
+  description: "<gray>Dig up <gray>{target} gravel <gray>blocks!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 50
+  target_max: 150
+  requirements:
+    materials: ["GRAVEL"]
+  rewards:
+    money: [60, 180]
+    experience: [30, 90]
+    items:
+      - "FLINT 32"
+      - "GRAVEL 64"
+  weight: 13
+  enabled: true
+
+daily_sand_collector:
+  name: "<yellow>Sand <gold>Collector"
+  description: "<gray>Collect <yellow>{target} sand <gray>blocks!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 50
+  target_max: 150
+  requirements:
+    materials: ["SAND", "RED_SAND"]
+  rewards:
+    money: [60, 180]
+    experience: [30, 90]
+    items:
+      - "SAND 64"
+      - "SANDSTONE 32"
+  weight: 12
+  enabled: true
+
+daily_emerald_seeker:
+  name: "<green>Emerald <light_purple>Seeker"
+  description: "<gray>Find <green>{target} Emerald Ore <gray>in mountains!"
+  category: GATHERING
+  type: MINING
+  difficulty: EXTREME
+  target_min: 1
+  target_max: 5
+  requirements:
+    materials: ["EMERALD_ORE", "DEEPSLATE_EMERALD_ORE"]
+    biomes: ["mountains", "mountain_grove", "snowy_slopes"]
+  rewards:
+    money: [500, 1000]
+    experience: [250, 500]
+    items:
+      - "EMERALD 5"
+      - "EXPERIENCE_BOTTLE 16"
+      - "DIAMOND_PICKAXE 1"
+  weight: 3
+  enabled: true
+
+daily_copper_miner:
+  name: "<gold>Copper <yellow>Miner"
+  description: "<gray>Mine <gold>{target} Copper Ore <gray>for building!"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 30
+  target_max: 90
+  requirements:
+    materials: ["COPPER_ORE", "DEEPSLATE_COPPER_ORE"]
+  rewards:
+    money: [80, 200]
+    experience: [40, 100]
+    items:
+      - "COPPER_INGOT 16"
+      - "LIGHTNING_ROD 2"
+  weight: 11
+  enabled: true
+
+daily_lapis_collector:
+  name: "<blue>Lapis <aqua>Collector"
+  description: "<gray>Collect <blue>{target} Lapis Lazuli <gray>for enchanting!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 15
+  target_max: 45
+  requirements:
+    materials: ["LAPIS_ORE", "DEEPSLATE_LAPIS_ORE"]
+  rewards:
+    money: [120, 280]
+    experience: [60, 140]
+    items:
+      - "LAPIS_LAZULI 32"
+      - "ENCHANTED_BOOK 1"
+  weight: 9
+  enabled: true
+
+daily_redstone_miner:
+  name: "<red>Redstone <dark_red>Miner"
+  description: "<gray>Mine <red>{target} Redstone Ore <gray>for circuits!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 20
+  target_max: 60
+  requirements:
+    materials: ["REDSTONE_ORE", "DEEPSLATE_REDSTONE_ORE"]
+  rewards:
+    money: [100, 250]
+    experience: [50, 125]
+    items:
+      - "REDSTONE 64"
+      - "REPEATER 8"
+  weight: 10
+  enabled: true
+
+# ========================================
+# CONFIGURATION NOTES
+# ========================================
+#
+# Daily Quest Features:
+# - Reset every day at midnight (configurable in main config)
+# - Moderate targets and rewards
+# - Players can have multiple daily quests active
+# - Quick completion for regular engagement
+#
+# Color Guidelines (MiniMessage):
+# - Use <color> tags instead of & codes
+# - Main text: <gray>
+# - Highlights: <yellow>, <aqua>, <green>, <gold>
+# - Special items: <light_purple>, <red>, <blue>
+# - Rare items: <dark_purple>, <dark_red>
+# - Bold text: <bold> for emphasis
+# - Legacy support: &7 codes will also work but <gray> is preferred
+#
+# Target Scaling:
+# - EASY: 10-100 items typically
+# - MEDIUM: 5-50 items typically  
+# - HARD: 1-20 items typically
+# - EXTREME: 1-10 items typically
+#
+# Weight System:
+# - EASY quests: 15-20 weight
+# - MEDIUM quests: 8-12 weight
+# - HARD quests: 4-8 weight
+# - EXTREME quests: 2-5 weight
+#
+# Reward Guidelines:
+# - Money: 50-800 coins for daily quests
+# - Experience: 25-300 XP for daily quests
+# - Items: Practical and useful for progression
+#
+# ========================================

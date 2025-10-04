@@ -1,0 +1,830 @@
+# ========================================
+# WoidZQuests - Job-Specific Quests Configuration
+# ========================================
+# Job quests are tied to specific Jobs Reborn jobs
+# Players must have the job to receive these quests
+# These quests help players progress in their chosen professions
+#
+# Quest Format:
+# quest_id:
+#   name: "Display name"
+#   description: "Description with progress placeholders"
+#   job: "JobName"  # Must match Jobs Reborn job name exactly
+#   category: GATHERING/COMBAT/CRAFTING/EXPLORATION/SURVIVAL/JOBS/BUILDING/SPECIAL
+#   type: MINING/WOODCUTTING/FARMING/FISHING/HUNTING/BUILDING/CRAFTING/etc
+#   difficulty: EASY/MEDIUM/HARD/EXTREME
+#   target_min: 100  # Minimum target for this quest
+#   target_max: 500  # Maximum target (random between min/max)
+#   level_requirement: 5  # Minimum job level required
+#   requirements: # Optional filters
+#   rewards: # Rewards scaled by difficulty
+#   weight: 10  # Higher = more likely to be selected
+#   enabled: true
+
+# ========================================
+# MINER JOB QUESTS
+# ========================================
+
+miner_coal_collector:
+  name: "<dark_gray><bold>Coal Collector"
+  description: "<gray>Mine <dark_gray>{target} Coal Ore <gray>to fuel the economy!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 50
+  target_max: 150
+  level_requirement: 1
+  requirements:
+    materials: ["COAL_ORE", "DEEPSLATE_COAL_ORE"]
+    worlds: ["world"]
+  rewards:
+    money: [100, 300]  # Min, Max based on target
+    experience: [50, 150]
+    job_xp: [200, 500]
+    items:
+      - "COAL 32"
+      - "TORCH 64"
+  weight: 15
+  enabled: true
+
+miner_iron_seeker:
+  name: "<white><bold>Iron Seeker"
+  description: "<gray>Extract <white>{target} Iron Ore <gray>from the depths!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: EASY
+  target_min: 30
+  target_max: 100
+  level_requirement: 3
+  requirements:
+    materials: ["IRON_ORE", "DEEPSLATE_IRON_ORE"]
+    y_max: 64
+  rewards:
+    money: [200, 500]
+    experience: [75, 200]
+    job_xp: [300, 700]
+    items:
+      - "IRON_INGOT 16"
+  weight: 12
+  enabled: true
+
+miner_gold_rush:
+  name: "<gold><bold>Gold Rush"
+  description: "<gray>Strike gold by mining <gold>{target} Gold Ore<gray>!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 20
+  target_max: 60
+  level_requirement: 5
+  requirements:
+    materials: ["GOLD_ORE", "DEEPSLATE_GOLD_ORE", "NETHER_GOLD_ORE"]
+  rewards:
+    money: [400, 800]
+    experience: [100, 250]
+    job_xp: [500, 1000]
+    items:
+      - "GOLD_INGOT 12"
+      - "GOLDEN_APPLE 3"
+  weight: 10
+  enabled: true
+
+miner_diamond_hunter:
+  name: "<aqua><bold>Diamond Hunter"
+  description: "<gray>Find <aqua>{target} precious Diamond Ore<gray>!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target_min: 5
+  target_max: 20
+  level_requirement: 10
+  requirements:
+    materials: ["DIAMOND_ORE", "DEEPSLATE_DIAMOND_ORE"]
+    y_max: 16
+  rewards:
+    money: [1000, 2000]
+    experience: [200, 400]
+    job_xp: [800, 1500]
+    items:
+      - "DIAMOND 8"
+      - "EXPERIENCE_BOTTLE 16"
+  weight: 5
+  enabled: true
+
+miner_deep_explorer:
+  name: "<dark_purple><bold>Deep Explorer"
+  description: "<gray>Mine <dark_purple>{target} blocks <gray>below Y-level -32!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 200
+  target_max: 500
+  level_requirement: 7
+  requirements:
+    materials: ["STONE", "DEEPSLATE", "COBBLESTONE", "COBBLED_DEEPSLATE"]
+    y_max: -32
+  rewards:
+    money: [300, 600]
+    experience: [150, 300]
+    job_xp: [400, 800]
+    items:
+      - "NIGHT_VISION_POTION 5"
+      - "COOKED_BEEF 32"
+  weight: 8
+  enabled: true
+
+miner_deepslate_coal:
+  name: "<dark_gray><bold>Deepslate Coal Miner"
+  description: "<gray>Mine <dark_gray>{target} Deepslate Coal Ore <gray>from deep caves!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 30
+  target_max: 80
+  level_requirement: 5
+  requirements:
+    materials: ["DEEPSLATE_COAL_ORE"]
+    y_max: 0
+  rewards:
+    money: [200, 450]
+    experience: [100, 225]
+    job_xp: [350, 750]
+    items:
+      - "COAL 48"
+      - "TORCH 96"
+  weight: 8
+  enabled: true
+
+miner_deepslate_iron:
+  name: "<gray><bold>Deepslate Iron Extractor"
+  description: "<gray>Extract <white>{target} Deepslate Iron Ore <gray>from the depths!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 20
+  target_max: 60
+  level_requirement: 6
+  requirements:
+    materials: ["DEEPSLATE_IRON_ORE"]
+    y_max: 0
+  rewards:
+    money: [300, 650]
+    experience: [125, 275]
+    job_xp: [450, 900]
+    items:
+      - "IRON_INGOT 24"
+      - "IRON_PICKAXE 1"
+  weight: 7
+  enabled: true
+
+miner_deepslate_diamond:
+  name: "<light_purple><bold>Deepslate Diamond Seeker"
+  description: "<gray>Find <aqua>{target} Deepslate Diamond Ore <gray>in the deepest caves!"
+  job: "Miner"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target_min: 3
+  target_max: 12
+  level_requirement: 12
+  requirements:
+    materials: ["DEEPSLATE_DIAMOND_ORE"]
+    y_max: -32
+  rewards:
+    money: [1500, 3000]
+    experience: [300, 600]
+    job_xp: [1000, 2000]
+    items:
+      - "DIAMOND 12"
+      - "DIAMOND_PICKAXE 1"
+      - "EXPERIENCE_BOTTLE 32"
+  weight: 4
+  enabled: true
+
+# ========================================
+# WOODCUTTER JOB QUESTS
+# ========================================
+
+woodcutter_oak_harvester:
+  name: "<gold><bold>Oak Harvester"
+  description: "<gray>Chop down <gold>{target} Oak Logs <gray>for construction!"
+  job: "Woodcutter"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: EASY
+  target_min: 64
+  target_max: 192
+  level_requirement: 1
+  requirements:
+    materials: ["OAK_LOG", "STRIPPED_OAK_LOG"]
+    biomes: ["forest", "plains"]
+  rewards:
+    money: [80, 240]
+    experience: [40, 120]
+    job_xp: [200, 600]
+    items:
+      - "OAK_PLANKS 128"
+      - "STICK 64"
+  weight: 15
+  enabled: true
+
+woodcutter_spruce_specialist:
+  name: "<dark_green><bold>Spruce Specialist"
+  description: "<gray>Harvest <dark_green>{target} Spruce Logs <gray>from the taiga!"
+  job: "Woodcutter"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: EASY
+  target_min: 48
+  target_max: 144
+  level_requirement: 2
+  requirements:
+    materials: ["SPRUCE_LOG", "STRIPPED_SPRUCE_LOG"]
+    biomes: ["taiga", "snowy_taiga"]
+  rewards:
+    money: [100, 300]
+    experience: [50, 150]
+    job_xp: [250, 750]
+    items:
+      - "SPRUCE_PLANKS 96"
+  weight: 12
+  enabled: true
+
+woodcutter_jungle_explorer:
+  name: "<green><bold>Jungle Explorer"
+  description: "<gray>Navigate and harvest <green>{target} Jungle Logs<gray>!"
+  job: "Woodcutter"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: MEDIUM
+  target_min: 32
+  target_max: 96
+  level_requirement: 5
+  requirements:
+    materials: ["JUNGLE_LOG", "STRIPPED_JUNGLE_LOG"]
+    biomes: ["jungle", "sparse_jungle"]
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    job_xp: [400, 800]
+    items:
+      - "JUNGLE_PLANKS 64"
+      - "COCOA_BEANS 32"
+  weight: 8
+  enabled: true
+
+woodcutter_rare_wood_collector:
+  name: "<light_purple><bold>Rare Wood Collector"
+  description: "<gray>Collect <light_purple>{target} rare wood types <gray>for premium builds!"
+  job: "Woodcutter"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: HARD
+  target_min: 16
+  target_max: 48
+  level_requirement: 8
+  requirements:
+    materials: ["DARK_OAK_LOG", "ACACIA_LOG", "MANGROVE_LOG", "CHERRY_LOG", "BAMBOO_BLOCK"]
+  rewards:
+    money: [500, 1000]
+    experience: [200, 400]
+    job_xp: [600, 1200]
+    items:
+      - "DARK_OAK_PLANKS 32"
+      - "ACACIA_PLANKS 32"
+      - "GOLDEN_AXE 1"
+  weight: 6
+  enabled: true
+
+# ========================================
+# FARMER JOB QUESTS
+# ========================================
+
+farmer_wheat_grower:
+  name: "<yellow><bold>Wheat Grower"
+  description: "<gray>Harvest <yellow>{target} Wheat <gray>to feed the server!"
+  job: "Farmer"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 100
+  target_max: 300
+  level_requirement: 1
+  requirements:
+    materials: ["WHEAT"]
+  rewards:
+    money: [150, 450]
+    experience: [75, 225]
+    job_xp: [300, 900]
+    items:
+      - "BREAD 64"
+      - "WHEAT_SEEDS 128"
+  weight: 15
+  enabled: true
+
+farmer_root_vegetable_master:
+  name: "<red><bold>Root Vegetable Master"
+  description: "<gray>Grow <red>{target} root vegetables <gray>for nutrition!"
+  job: "Farmer"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 80
+  target_max: 240
+  level_requirement: 2
+  requirements:
+    materials: ["CARROTS", "POTATOES", "BEETROOTS"]
+  rewards:
+    money: [120, 360]
+    experience: [60, 180]
+    job_xp: [250, 750]
+    items:
+      - "GOLDEN_CARROT 16"
+      - "BAKED_POTATO 32"
+  weight: 12
+  enabled: true
+
+farmer_nether_wart_cultivator:
+  name: "<dark_red><bold>Nether Wart Cultivator"
+  description: "<gray>Cultivate <dark_red>{target} Nether Wart <gray>for brewing!"
+  job: "Farmer"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 32
+  target_max: 96
+  level_requirement: 6
+  requirements:
+    materials: ["NETHER_WART"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [400, 800]
+    experience: [150, 300]
+    job_xp: [500, 1000]
+    items:
+      - "NETHER_WART 64"
+      - "BLAZE_POWDER 8"
+  weight: 8
+  enabled: true
+
+farmer_berry_picker:
+  name: "<red><bold>Berry Picker"
+  description: "<gray>Pick <red>{target} Sweet Berries <gray>from the wild!"
+  job: "Farmer"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 64
+  target_max: 192
+  level_requirement: 4
+  requirements:
+    materials: ["SWEET_BERRIES"]
+    biomes: ["taiga", "snowy_taiga"]
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    job_xp: [350, 700]
+    items:
+      - "SWEET_BERRIES 128"
+      - "HONEY_BOTTLE 8"
+  weight: 10
+  enabled: true
+
+# ========================================
+# FISHERMAN JOB QUESTS
+# ========================================
+
+fisherman_angler:
+  name: "<aqua><bold>Angler"
+  description: "<gray>Catch <aqua>{target} fish <gray>from the waters!"
+  job: "Fisherman"
+  category: GATHERING
+  type: FISHING
+  difficulty: EASY
+  target_min: 20
+  target_max: 60
+  level_requirement: 1
+  requirements:
+    items: ["ANY_FISH"]
+    environment: "WATER"
+  rewards:
+    money: [100, 300]
+    experience: [50, 150]
+    job_xp: [200, 600]
+    items:
+      - "COOKED_COD 32"
+      - "FISHING_ROD 1"
+  weight: 15
+  enabled: true
+
+fisherman_river_angler:
+  name: "<blue><bold>River Angler"
+  description: "<gray>Catch <blue>{target} fish <gray>from rivers!"
+  job: "Fisherman"
+  category: GATHERING
+  type: FISHING
+  difficulty: EASY
+  target_min: 15
+  target_max: 45
+  level_requirement: 2
+  requirements:
+    items: ["ANY_FISH"]
+    biomes: ["river", "frozen_river"]
+  rewards:
+    money: [150, 350]
+    experience: [75, 175]
+    job_xp: [250, 750]
+    items:
+      - "COOKED_SALMON 24"
+  weight: 12
+  enabled: true
+
+fisherman_ocean_fisher:
+  name: "<dark_aqua><bold>Ocean Fisher"
+  description: "<gray>Catch <dark_aqua>{target} fish <gray>from the ocean!"
+  job: "Fisherman"
+  category: GATHERING
+  type: FISHING
+  difficulty: MEDIUM
+  target_min: 30
+  target_max: 80
+  level_requirement: 4
+  requirements:
+    items: ["ANY_FISH"]
+    biomes: ["ocean", "deep_ocean", "warm_ocean", "cold_ocean"]
+  rewards:
+    money: [200, 500]
+    experience: [100, 250]
+    job_xp: [400, 900]
+    items:
+      - "COOKED_COD 48"
+      - "HEART_OF_THE_SEA 1"
+  weight: 10
+  enabled: true
+
+fisherman_treasure_hunter:
+  name: "<gold><bold>Treasure Hunter"
+  description: "<gray>Fish up <gold>{target} treasure items <gray>from the depths!"
+  job: "Fisherman"
+  category: GATHERING
+  type: FISHING
+  difficulty: HARD
+  target_min: 3
+  target_max: 10
+  level_requirement: 8
+  requirements:
+    treasure_only: true
+    environment: "WATER"
+  rewards:
+    money: [800, 1500]
+    experience: [300, 600]
+    job_xp: [800, 1600]
+    items:
+      - "ENCHANTED_BOOK 2"
+      - "NAME_TAG 3"
+  weight: 5
+  enabled: true
+
+fisherman_lava_fisher:
+  name: "<red><bold>Lava Fisher"
+  description: "<gray>Brave the heat and fish in lava <red>{target} times<gray>!"
+  job: "Fisherman"
+  category: GATHERING
+  type: FISHING
+  difficulty: EXTREME
+  target_min: 5
+  target_max: 15
+  level_requirement: 12
+  requirements:
+    environment: "LAVA"
+    worlds: ["world_nether"]
+  rewards:
+    money: [1000, 2000]
+    experience: [400, 800]
+    job_xp: [1000, 2000]
+    items:
+      - "FIRE_RESISTANCE_POTION 10"
+      - "MAGMA_CREAM 16"
+  weight: 3
+  enabled: true
+
+# ========================================
+# HUNTER JOB QUESTS
+# ========================================
+
+hunter_zombie_slayer:
+  name: "&2&lZombie Slayer"
+  description: "&7Eliminate &2{target} Zombies &7during the night!"
+  job: "Hunter"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EASY
+  target_min: 25
+  target_max: 75
+  level_requirement: 1
+  requirements:
+    mob_types: ["ZOMBIE", "ZOMBIE_VILLAGER", "HUSK"]
+  rewards:
+    money: [150, 450]
+    experience: [75, 225]
+    job_xp: [300, 900]
+    items:
+      - "ROTTEN_FLESH 32"
+      - "IRON_SWORD 1"
+  weight: 15
+  enabled: true
+
+hunter_skeleton_archer:
+  name: "&f&lSkeleton Archer"
+  description: "&7Defeat &f{target} Skeletons &7and claim their bones!"
+  job: "Hunter"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EASY
+  target_min: 20
+  target_max: 60
+  level_requirement: 2
+  requirements:
+    mob_types: ["SKELETON", "STRAY", "WITHER_SKELETON"]
+  rewards:
+    money: [200, 400]
+    experience: [100, 200]
+    job_xp: [350, 700]
+    items:
+      - "BONE 64"
+      - "ARROW 128"
+  weight: 12
+  enabled: true
+
+hunter_spider_exterminator:
+  name: "&8&lSpider Exterminator"
+  description: "&7Clear out &8{target} Spiders &7from caves!"
+  job: "Hunter"
+  category: COMBAT
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 15
+  target_max: 45
+  level_requirement: 4
+  requirements:
+    mob_types: ["SPIDER", "CAVE_SPIDER"]
+  rewards:
+    money: [250, 500]
+    experience: [125, 250]
+    job_xp: [400, 800]
+    items:
+      - "STRING 32"
+      - "SPIDER_EYE 16"
+  weight: 10
+  enabled: true
+
+hunter_enderman_stalker:
+  name: "&5&lEnderman Stalker"
+  description: "&7Hunt down &5{target} Endermen &7for their pearls!"
+  job: "Hunter"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target_min: 5
+  target_max: 15
+  level_requirement: 8
+  requirements:
+    mob_types: ["ENDERMAN"]
+  rewards:
+    money: [600, 1200]
+    experience: [250, 500]
+    job_xp: [700, 1400]
+    items:
+      - "ENDER_PEARL 8"
+      - "ENCHANTED_BOOK 1"
+  weight: 6
+  enabled: true
+
+hunter_nether_demon_slayer:
+  name: "&4&lNether Demon Slayer"
+  description: "&7Slay &4{target} Nether creatures &7in their domain!"
+  job: "Hunter"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target_min: 10
+  target_max: 30
+  level_requirement: 10
+  requirements:
+    mob_types: ["BLAZE", "GHAST", "WITHER_SKELETON", "PIGLIN_BRUTE"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [800, 1600]
+    experience: [300, 600]
+    job_xp: [800, 1600]
+    items:
+      - "BLAZE_ROD 8"
+      - "GHAST_TEAR 4"
+      - "FIRE_RESISTANCE_POTION 5"
+  weight: 5
+  enabled: true
+
+# ========================================
+# BUILDER JOB QUESTS
+# ========================================
+
+builder_stone_mason:
+  name: "&7&lStone Mason"
+  description: "&7Place &7{target} stone blocks &7for construction!"
+  job: "Builder"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 200
+  target_max: 600
+  level_requirement: 1
+  requirements:
+    materials: ["STONE", "COBBLESTONE", "STONE_BRICKS", "SMOOTH_STONE"]
+  rewards:
+    money: [100, 300]
+    experience: [50, 150]
+    job_xp: [200, 600]
+    items:
+      - "STONE 128"
+      - "STONE_PICKAXE 1"
+  weight: 15
+  enabled: true
+
+builder_wood_framer:
+  name: "&6&lWood Framer"
+  description: "&7Frame structures with &6{target} wooden planks&7!"
+  job: "Builder"
+  category: BUILDING
+  type: BUILDING
+  difficulty: EASY
+  target_min: 150
+  target_max: 450
+  level_requirement: 2
+  requirements:
+    materials: ["OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS"]
+  rewards:
+    money: [120, 360]
+    experience: [60, 180]
+    job_xp: [250, 750]
+    items:
+      - "OAK_PLANKS 96"
+      - "IRON_AXE 1"
+  weight: 12
+  enabled: true
+
+builder_glass_artist:
+  name: "&b&lGlass Artist"
+  description: "&7Create windows with &b{target} glass blocks&7!"
+  job: "Builder"
+  category: BUILDING
+  type: BUILDING
+  difficulty: MEDIUM
+  target_min: 64
+  target_max: 192
+  level_requirement: 5
+  requirements:
+    materials: ["GLASS", "WHITE_STAINED_GLASS", "LIGHT_BLUE_STAINED_GLASS", "BLUE_STAINED_GLASS", "CYAN_STAINED_GLASS"]
+  rewards:
+    money: [300, 600]
+    experience: [150, 300]
+    job_xp: [400, 800]
+    items:
+      - "GLASS 128"
+      - "GLASS_PANE 64"
+  weight: 8
+  enabled: true
+
+builder_decorator:
+  name: "&d&lDecorator"
+  description: "&7Add flair with &d{target} decorative blocks&7!"
+  job: "Builder"
+  category: BUILDING
+  type: BUILDING
+  difficulty: MEDIUM
+  target_min: 50
+  target_max: 150
+  level_requirement: 6
+  requirements:
+    materials: ["FLOWER_POT", "PAINTING", "ITEM_FRAME", "CARPET", "BANNER"]
+  rewards:
+    money: [400, 800]
+    experience: [200, 400]
+    job_xp: [500, 1000]
+    items:
+      - "FLOWER_POT 16"
+      - "PAINTING 8"
+      - "ITEM_FRAME 12"
+  weight: 7
+  enabled: true
+
+# ========================================
+# CRAFTER JOB QUESTS
+# ========================================
+
+crafter_tool_smith:
+  name: "&e&lTool Smith"
+  description: "&7Craft &e{target} tools &7for fellow players!"
+  job: "Crafter"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: EASY
+  target_min: 10
+  target_max: 30
+  level_requirement: 1
+  requirements:
+    materials: ["WOODEN_PICKAXE", "WOODEN_AXE", "WOODEN_SHOVEL", "WOODEN_HOE", "STONE_PICKAXE", "STONE_AXE", "STONE_SHOVEL", "STONE_HOE"]
+  rewards:
+    money: [200, 600]
+    experience: [100, 300]
+    job_xp: [400, 1200]
+    items:
+      - "IRON_INGOT 32"
+      - "STICK 64"
+  weight: 15
+  enabled: true
+
+crafter_armor_smith:
+  name: "&9&lArmor Smith"
+  description: "&7Forge &9{target} armor pieces &7for protection!"
+  job: "Crafter"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: MEDIUM
+  target_min: 8
+  target_max: 24
+  level_requirement: 4
+  requirements:
+    materials: ["LEATHER_HELMET", "LEATHER_CHESTPLATE", "LEATHER_LEGGINGS", "LEATHER_BOOTS", "IRON_HELMET", "IRON_CHESTPLATE", "IRON_LEGGINGS", "IRON_BOOTS"]
+  rewards:
+    money: [400, 800]
+    experience: [200, 400]
+    job_xp: [600, 1200]
+    items:
+      - "IRON_INGOT 48"
+      - "LEATHER 32"
+  weight: 10
+  enabled: true
+
+crafter_redstone_engineer:
+  name: "&c&lRedstone Engineer"
+  description: "&7Engineer &c{target} redstone contraptions&7!"
+  job: "Crafter"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: HARD
+  target_min: 5
+  target_max: 15
+  level_requirement: 8
+  requirements:
+    materials: ["PISTON", "STICKY_PISTON", "REDSTONE_TORCH", "REPEATER", "COMPARATOR", "HOPPER", "DROPPER", "DISPENSER"]
+  rewards:
+    money: [800, 1600]
+    experience: [300, 600]
+    job_xp: [800, 1600]
+    items:
+      - "REDSTONE 128"
+      - "REDSTONE_TORCH 32"
+  weight: 6
+  enabled: true
+
+# ========================================
+# CONFIGURATION NOTES
+# ========================================
+#
+# Job Names must match Jobs Reborn exactly:
+# Common job names: Miner, Woodcutter, Farmer, Fisherman, Hunter, Builder, Crafter, Brewer, Enchanter, Weaponsmith, Digger, Explorer
+#
+# Color Guidelines (MiniMessage):
+# - Use <color> tags instead of & codes
+# - Main text: <gray>
+# - Highlights: <yellow>, <aqua>, <green>, <gold>
+# - Special items: <light_purple>, <red>, <blue>
+# - Rare items: <dark_purple>, <dark_red>
+# - Bold text: <bold> for quest names
+#
+# Reward Arrays [min, max]:
+# - Values are scaled based on actual target (between target_min and target_max)
+# - Higher difficulty multiplies final rewards
+#
+# Level Requirements:
+# - Players must be at least this level in the job to receive the quest
+# - Helps progression and prevents overwhelming new players
+#
+# Weight System:
+# - Higher weight = more likely to be selected
+# - Use to balance quest frequency
+# - Easy quests should have higher weight
+#
+# Special Requirements:
+# - treasure_only: Only count treasure items from fishing
+# - boss_only: Only count boss-like mobs
+# - environment: WATER/LAVA/END for fishing
+#
+# ========================================

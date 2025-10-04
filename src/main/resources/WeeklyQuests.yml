@@ -1,0 +1,1114 @@
+# ========================================
+# WoidZQuests - Weekly Quests Configuration
+# ========================================
+# Weekly quests reset every Monday at midnight (configurable)
+# These are longer-term objectives with better rewards
+# Players can have multiple weekly quests active
+#
+# Quest Format:
+# quest_id:
+#   name: "Display name"
+#   description: "Description with {target} placeholder"
+#   category: GATHERING/COMBAT/CRAFTING/EXPLORATION/SURVIVAL/JOBS/BUILDING/SPECIAL
+#   type: MINING/WOODCUTTING/FARMING/FISHING/HUNTING/BUILDING/CRAFTING/etc
+#   difficulty: EASY/MEDIUM/HARD/EXTREME
+#   target_min: 500   # Minimum target (higher than daily)
+#   target_max: 2000  # Maximum target
+#   requirements: # Optional filters
+#   rewards: # Better rewards than daily quests
+#   weight: 10  # Selection probability
+#   enabled: true
+
+# ========================================
+# WEEKLY MINING QUESTS
+# ========================================
+
+weekly_ore_master:
+  name: "<gold><bold>Ore Master"
+  description: "<gray>Mine <gold>{target} valuable ores <gray>throughout the week!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 800
+  target_max: 1500
+  requirements:
+    materials: ["IRON_ORE", "GOLD_ORE", "DIAMOND_ORE", "EMERALD_ORE", "LAPIS_ORE", "REDSTONE_ORE", "DEEPSLATE_IRON_ORE", "DEEPSLATE_GOLD_ORE", "DEEPSLATE_DIAMOND_ORE", "DEEPSLATE_EMERALD_ORE", "DEEPSLATE_LAPIS_ORE", "DEEPSLATE_REDSTONE_ORE"]
+    y_max: 64
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: 5
+    items:
+      - "DIAMOND_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:4},{id:unbreaking,lvl:3}]}"
+      - "DIAMOND 32"
+      - "EMERALD 16"
+    commands:
+      - "qp give {player} 5"
+      - "broadcast <gray>[<gold>Weekly<gray>] <light_purple>{player} <gray>completed the Ore Master challenge!"
+  weight: 12
+  enabled: true
+
+weekly_deep_miner:
+  name: "<dark_purple><bold>Deep Miner"
+  description: "<gray>Excavate <dark_purple>{target} blocks <gray>from the deepest depths!"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target_min: 2000
+  target_max: 4000
+  requirements:
+    materials: ["DEEPSLATE", "COBBLED_DEEPSLATE", "STONE", "COBBLESTONE"]
+    y_max: -32
+    worlds: ["world"]
+  rewards:
+    money: [5000, 10000]
+    experience: [2500, 5000]
+    quest_points: [75, 150]
+    items:
+      - "NETHERITE_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:fortune,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "NIGHT_VISION_POTION 20"
+      - "GOLDEN_APPLE 10"
+  weight: 8
+  enabled: true
+
+weekly_gemstone_collector:
+  name: "<aqua><bold>Gemstone Collector"
+  description: "<gray>Collect <aqua>{target} precious gemstones <gray>this week!"
+  category: GATHERING
+  type: MINING
+  difficulty: EXTREME
+  target_min: 100
+  target_max: 300
+  requirements:
+    materials: ["DIAMOND", "EMERALD", "LAPIS_LAZULI"]
+    y_max: 20
+  rewards:
+    money: [8000, 15000]
+    experience: [4000, 7500]
+    quest_points: [100, 200]
+    items:
+      - "DIAMOND_BLOCK 5"
+      - "EMERALD_BLOCK 3"
+      - "ENCHANTED_GOLDEN_APPLE 5"
+      - "EXPERIENCE_BOTTLE 64"
+  weight: 5
+  enabled: true
+
+# ========================================
+# WEEKLY FARMING QUESTS
+# ========================================
+
+weekly_harvest_king:
+  name: "<green><bold>Harvest King"
+  description: "<gray>Harvest <green>{target} crops <gray>to become the week's harvest champion!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 1500
+  target_max: 3000
+  requirements:
+    materials: ["WHEAT", "CARROTS", "POTATOES", "BEETROOTS"]
+  rewards:
+    money: [2500, 5000]
+    experience: [1250, 2500]
+    quest_points: [40, 80]
+    items:
+      - "DIAMOND_HOE 1 {Enchantments:[{id:efficiency,lvl:5},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "GOLDEN_CARROT 128"
+      - "BREAD 256"
+  weight: 10
+  enabled: true
+
+weekly_nether_farmer:
+  name: "<dark_red><bold>Nether Farmer"
+  description: "<gray>Cultivate <dark_red>{target} Nether Wart <gray>in the dangerous Nether!"
+  category: GATHERING
+  type: FARMING
+  difficulty: HARD
+  target_min: 500
+  target_max: 1000
+  requirements:
+    materials: ["NETHER_WART"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "NETHER_WART 256"
+      - "BLAZE_POWDER 32"
+      - "FIRE_RESISTANCE_POTION 15"
+      - "GOLDEN_APPLE 8"
+  weight: 6
+  enabled: true
+
+weekly_berry_baron:
+  name: "<red><bold>Berry Baron"
+  description: "<gray>Pick <red>{target} Sweet Berries <gray>from the wilderness!"
+  category: GATHERING
+  type: FARMING
+  difficulty: EASY
+  target_min: 1000
+  target_max: 2000
+  requirements:
+    materials: ["SWEET_BERRIES"]
+    biomes: ["taiga", "snowy_taiga"]
+  rewards:
+    money: [1500, 3000]
+    experience: [750, 1500]
+    quest_points: [30, 60]
+    items:
+      - "SWEET_BERRIES 512"
+      - "HONEY_BOTTLE 32"
+      - "CAKE 8"
+  weight: 8
+  enabled: true
+
+# ========================================
+# WEEKLY COMBAT QUESTS
+# ========================================
+
+weekly_monster_slayer:
+  name: "<red><bold>Monster Slayer"
+  description: "<gray>Eliminate <red>{target} hostile mobs <gray>to protect the realm!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 500
+  target_max: 1000
+  requirements:
+    mob_types: ["ZOMBIE", "SKELETON", "CREEPER", "SPIDER", "ENDERMAN", "WITCH", "PHANTOM"]
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [50, 100]
+    items:
+      - "DIAMOND_SWORD 1 {Enchantments:[{id:sharpness,lvl:4},{id:unbreaking,lvl:3}]}"
+      - "ENCHANTED_GOLDEN_APPLE 3"
+      - "TOTEM_OF_UNDYING 1"
+  weight: 10
+  enabled: true
+
+weekly_nether_conqueror:
+  name: "<dark_red><bold>Nether Conqueror"
+  description: "<gray>Conquer <dark_red>{target} Nether creatures <gray>in their fiery domain!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target_min: 200
+  target_max: 500
+  requirements:
+    mob_types: ["BLAZE", "GHAST", "WITHER_SKELETON", "PIGLIN_BRUTE", "HOGLIN", "ZOGLIN"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [6000, 12000]
+    experience: [3000, 6000]
+    quest_points: [80, 160]
+    items:
+      - "NETHERITE_SWORD 1 {Enchantments:[{id:sharpness,lvl:5},{id:fire_aspect,lvl:2},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "FIRE_RESISTANCE_POTION 20"
+      - "BLAZE_ROD 32"
+      - "GHAST_TEAR 16"
+  weight: 6
+  enabled: true
+
+weekly_end_explorer:
+  name: "<dark_purple><bold>End Explorer"
+  description: "<gray>Defeat <dark_purple>{target} End creatures <gray>in the void dimension!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EXTREME
+  target_min: 100
+  target_max: 300
+  requirements:
+    mob_types: ["ENDERMAN", "ENDERMITE", "SHULKER"]
+    worlds: ["world_the_end"]
+  rewards:
+    money: [10000, 20000]
+    experience: [5000, 10000]
+    quest_points: [120, 240]
+    items:
+      - "ELYTRA 1"
+      - "SHULKER_BOX 5"
+      - "ENDER_PEARL 64"
+      - "END_CRYSTAL 4"
+  weight: 3
+  enabled: true
+
+weekly_boss_hunter:
+  name: "<dark_red><bold>Boss Hunter"
+  description: "<gray>Hunt down <dark_red>{target} boss-like creatures <gray>for ultimate glory!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EXTREME
+  target_min: 10
+  target_max: 25
+  requirements:
+    boss_only: true
+  rewards:
+    money: [15000, 30000]
+    experience: [7500, 15000]
+    quest_points: [200, 400]
+    items:
+      - "NETHERITE_HELMET 1 {Enchantments:[{id:protection,lvl:4},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "NETHERITE_CHESTPLATE 1 {Enchantments:[{id:protection,lvl:4},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "DRAGON_HEAD 1"
+      - "NETHER_STAR 3"
+  weight: 2
+  enabled: true
+
+# ========================================
+# WEEKLY BUILDING QUESTS
+# ========================================
+
+weekly_architect:
+  name: "<yellow><bold>Architect"
+  description: "<gray>Place <yellow>{target} building blocks <gray>to create magnificent structures!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: HARD
+  target_min: 5000
+  target_max: 10000
+  requirements:
+    materials: ["STONE", "STONE_BRICKS", "COBBLESTONE", "OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS"]
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "BEACON 1"
+      - "DIAMOND_BLOCK 8"
+      - "EMERALD_BLOCK 4"
+      - "GOLD_BLOCK 16"
+  weight: 8
+  enabled: true
+
+weekly_decorator:
+  name: "<light_purple><bold>Master Decorator"
+  description: "<gray>Add <light_purple>{target} decorative elements <gray>to beautify the world!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: MEDIUM
+  target_min: 1000
+  target_max: 2000
+  requirements:
+    materials: ["GLASS", "STAINED_GLASS", "CARPET", "PAINTING", "ITEM_FRAME", "FLOWER_POT", "BANNER"]
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [45, 90]
+    items:
+      - "GLASS 256"
+      - "STAINED_GLASS 128"
+      - "PAINTING 32"
+      - "ITEM_FRAME 64"
+  weight: 7
+  enabled: true
+
+# ========================================
+# WEEKLY EXPLORATION QUESTS
+# ========================================
+
+weekly_world_traveler:
+  name: "<aqua><bold>World Traveler"
+  description: "<gray>Travel <aqua>{target} blocks <gray>across different dimensions!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target_min: 25000
+  target_max: 50000
+  requirements:
+    worlds: ["world", "world_nether", "world_the_end"]
+  rewards:
+    money: [3500, 7000]
+    experience: [1750, 3500]
+    quest_points: [50, 100]
+    items:
+      - "ELYTRA 1"
+      - "FIREWORK_ROCKET 256"
+      - "ENDER_PEARL 32"
+      - "GOLDEN_APPLE 12"
+  weight: 8
+  enabled: true
+
+weekly_biome_explorer:
+  name: "<dark_green><bold>Biome Explorer"
+  description: "<gray>Discover <dark_green>{target} different biomes <gray>in your travels!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: HARD
+  target_min: 15
+  target_max: 30
+  requirements:
+    biome_discovery: true
+  rewards:
+    money: [5000, 10000]
+    experience: [2500, 5000]
+    quest_points: [75, 150]
+    items:
+      - "MAP 16"
+      - "COMPASS 8"
+      - "SPYGLASS 4"
+      - "LEAD 16"
+  weight: 6
+  enabled: true
+
+# ========================================
+# WEEKLY CRAFTING QUESTS
+# ========================================
+
+weekly_master_crafter:
+  name: "&6&lMaster Crafter"
+  description: "&7Craft &6{target} items &7to showcase your skills!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: MEDIUM
+  target_min: 200
+  target_max: 500
+  requirements:
+    categories: ["TOOLS", "ARMOR", "WEAPONS", "REDSTONE", "DECORATIONS"]
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "CRAFTING_TABLE 16"
+      - "IRON_INGOT 128"
+      - "DIAMOND 32"
+      - "ENCHANTED_BOOK 5"
+  weight: 9
+  enabled: true
+
+weekly_redstone_master:
+  name: "&c&lRedstone Master"
+  description: "&7Engineer &c{target} redstone contraptions &7this week!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: HARD
+  target_min: 50
+  target_max: 150
+  requirements:
+    materials: ["PISTON", "STICKY_PISTON", "REDSTONE_TORCH", "REPEATER", "COMPARATOR", "HOPPER", "DROPPER", "DISPENSER", "OBSERVER"]
+  rewards:
+    money: [6000, 12000]
+    experience: [3000, 6000]
+    quest_points: [80, 160]
+    items:
+      - "REDSTONE_BLOCK 64"
+      - "REDSTONE 512"
+      - "SLIME_BLOCK 32"
+      - "HONEY_BLOCK 32"
+  weight: 5
+  enabled: true
+
+# ========================================
+# WEEKLY FISHING QUESTS
+# ========================================
+
+weekly_fishing_master:
+  name: "&9&lFishing Master"
+  description: "&7Catch &9{target} fish &7from various water sources!"
+  category: GATHERING
+  type: FISHING
+  difficulty: MEDIUM
+  target_min: 300
+  target_max: 600
+  requirements:
+    items: ["COD", "SALMON", "TROPICAL_FISH", "PUFFERFISH"]
+    environment: "WATER"
+  rewards:
+    money: [2500, 5000]
+    experience: [1250, 2500]
+    quest_points: [40, 80]
+    items:
+      - "FISHING_ROD 1 {Enchantments:[{id:luck_of_the_sea,lvl:3},{id:lure,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "COOKED_COD 128"
+      - "COOKED_SALMON 128"
+  weight: 8
+  enabled: true
+
+weekly_treasure_seeker:
+  name: "&6&lTreasure Seeker"
+  description: "&7Fish up &6{target} treasure items &7from the depths!"
+  category: GATHERING
+  type: FISHING
+  difficulty: EXTREME
+  target_min: 20
+  target_max: 50
+  requirements:
+    treasure_only: true
+    environment: "WATER"
+  rewards:
+    money: [8000, 16000]
+    experience: [4000, 8000]
+    quest_points: [100, 200]
+    items:
+      - "ENCHANTED_BOOK 10"
+      - "NAME_TAG 16"
+      - "SADDLE 8"
+      - "NAUTILUS_SHELL 12"
+  weight: 4
+  enabled: true
+
+# ========================================
+# WEEKLY JOB QUESTS
+# ========================================
+
+weekly_job_master:
+  name: "&d&lJob Master"
+  description: "&7Gain &d{target} job experience &7across all your jobs!"
+  category: JOBS
+  type: JOBS_XP
+  difficulty: HARD
+  target_min: 50000
+  target_max: 100000
+  requirements:
+    any_job: true
+  rewards:
+    money: [7000, 14000]
+    experience: [3500, 7000]
+    quest_points: [90, 180]
+    items:
+      - "EXPERIENCE_BOTTLE 128"
+      - "DIAMOND_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:fortune,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "DIAMOND_AXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:fortune,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+  weight: 7
+  enabled: true
+
+weekly_entrepreneur:
+  name: "&a&lEntrepreneur"
+  description: "&7Earn &a${target} &7from your job activities!"
+  category: JOBS
+  type: JOBS_MONEY
+  difficulty: MEDIUM
+  target_min: 25000
+  target_max: 50000
+  requirements:
+    any_job: true
+  rewards:
+    money: [5000, 10000]
+    experience: [2500, 5000]
+    quest_points: [60, 120]
+    items:
+      - "EMERALD_BLOCK 8"
+      - "GOLD_BLOCK 16"
+      - "DIAMOND 32"
+  weight: 8
+  enabled: true
+
+# ========================================
+# WEEKLY SURVIVAL QUESTS
+# ========================================
+
+weekly_survivor:
+  name: "&2&lUltimate Survivor"
+  description: "&7Survive for &2{target} minutes &7without dying!"
+  category: SURVIVAL
+  type: SURVIVAL
+  difficulty: HARD
+  target_min: 2000  # ~33 hours
+  target_max: 4000  # ~67 hours
+  requirements:
+    no_death: true
+  rewards:
+    money: [10000, 20000]
+    experience: [5000, 10000]
+    quest_points: [150, 300]
+    items:
+      - "TOTEM_OF_UNDYING 5"
+      - "ENCHANTED_GOLDEN_APPLE 10"
+      - "NETHERITE_HELMET 1 {Enchantments:[{id:protection,lvl:4},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+  weight: 4
+  enabled: true
+
+weekly_playtime_champion:
+  name: "&e&lPlaytime Champion"
+  description: "&7Play for &e{target} minutes &7this week!"
+  category: SURVIVAL
+  type: TIMED
+  difficulty: MEDIUM
+  target_min: 1200  # 20 hours
+  target_max: 2400  # 40 hours
+  requirements:
+    playtime: true
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "EXPERIENCE_BOTTLE 64"
+      - "GOLDEN_APPLE 16"
+      - "CAKE 12"
+  weight: 10
+  enabled: true
+
+# ========================================
+# WEEKLY WOODCUTTING QUESTS
+# ========================================
+
+weekly_lumber_baron:
+  name: "<gold><bold>Lumber Baron"
+  description: "<gray>Chop <gold>{target} logs <gray>from various forests!"
+  category: GATHERING
+  type: WOODCUTTING
+  difficulty: MEDIUM
+  target_min: 2000
+  target_max: 4000
+  requirements:
+    materials: ["OAK_LOG", "SPRUCE_LOG", "BIRCH_LOG", "JUNGLE_LOG", "ACACIA_LOG", "DARK_OAK_LOG", "MANGROVE_LOG", "CHERRY_LOG", "STRIPPED_OAK_LOG", "STRIPPED_SPRUCE_LOG", "STRIPPED_BIRCH_LOG"]
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [45, 90]
+    items:
+      - "DIAMOND_AXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "OAK_LOG 256"
+      - "GOLDEN_APPLE 8"
+  weight: 9
+  enabled: true
+
+# ========================================
+# WEEKLY PLACE QUESTS
+# ========================================
+
+weekly_torch_master:
+  name: "<yellow><bold>Torch Master"
+  description: "<gray>Illuminate the world with <yellow>{target} torches<gray>!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: MEDIUM
+  target_min: 500
+  target_max: 1200
+  requirements:
+    materials: ["TORCH", "SOUL_TORCH", "REDSTONE_TORCH"]
+  rewards:
+    money: [2000, 4000]
+    experience: [1000, 2000]
+    quest_points: [30, 60]
+    items:
+      - "TORCH 512"
+      - "COAL_BLOCK 16"
+      - "LANTERN 64"
+  weight: 7
+  enabled: true
+
+weekly_farm_builder:
+  name: "<green><bold>Farm Builder"
+  description: "<gray>Plant <green>{target} crops <gray>to build a mega farm!"
+  category: BUILDING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 1000
+  target_max: 2500
+  requirements:
+    materials: ["WHEAT_SEEDS", "CARROT", "POTATO", "BEETROOT_SEEDS", "MELON_SEEDS", "PUMPKIN_SEEDS"]
+  rewards:
+    money: [2500, 5000]
+    experience: [1250, 2500]
+    quest_points: [40, 80]
+    items:
+      - "DIAMOND_HOE 1 {Enchantments:[{id:efficiency,lvl:5},{id:unbreaking,lvl:3}]}"
+      - "BONE_MEAL 256"
+      - "GOLDEN_CARROT 64"
+  weight: 8
+  enabled: true
+
+# ========================================
+# WEEKLY PLANT QUESTS
+# ========================================
+
+weekly_reforestation:
+  name: "<dark_green><bold>Reforestation Master"
+  description: "<gray>Plant <dark_green>{target} saplings <gray>to regrow forests!"
+  category: BUILDING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 500
+  target_max: 1000
+  requirements:
+    materials: ["OAK_SAPLING", "SPRUCE_SAPLING", "BIRCH_SAPLING", "JUNGLE_SAPLING", "ACACIA_SAPLING", "DARK_OAK_SAPLING", "MANGROVE_PROPAGULE"]
+  rewards:
+    money: [2000, 4000]
+    experience: [1000, 2000]
+    quest_points: [35, 70]
+    items:
+      - "BONE_MEAL 512"
+      - "OAK_SAPLING 64"
+      - "SPRUCE_SAPLING 64"
+  weight: 7
+  enabled: true
+
+weekly_greenhouse_master:
+  name: "<light_purple><bold>Greenhouse Master"
+  description: "<gray>Cultivate <light_purple>{target} various plants <gray>in your greenhouse!"
+  category: GATHERING
+  type: FARMING
+  difficulty: HARD
+  target_min: 800
+  target_max: 1500
+  requirements:
+    materials: ["SUGAR_CANE", "BAMBOO", "CACTUS", "KELP", "RED_MUSHROOM", "BROWN_MUSHROOM", "VINE"]
+  rewards:
+    money: [3500, 7000]
+    experience: [1750, 3500]
+    quest_points: [55, 110]
+    items:
+      - "MOSS_BLOCK 64"
+      - "BONE_MEAL 256"
+      - "GLOWSTONE 64"
+  weight: 6
+  enabled: true
+
+# ========================================
+# WEEKLY COLLECT QUESTS
+# ========================================
+
+weekly_butcher:
+  name: "<red><bold>Master Butcher"
+  description: "<gray>Collect <red>{target} raw meat <gray>from animals!"
+  category: GATHERING
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 500
+  target_max: 1000
+  requirements:
+    items: ["BEEF", "PORKCHOP", "CHICKEN", "MUTTON", "RABBIT"]
+  rewards:
+    money: [2500, 5000]
+    experience: [1250, 2500]
+    quest_points: [40, 80]
+    items:
+      - "DIAMOND_SWORD 1 {Enchantments:[{id:looting,lvl:3},{id:unbreaking,lvl:3}]}"
+      - "COOKED_BEEF 128"
+      - "GOLDEN_APPLE 8"
+  weight: 8
+  enabled: true
+
+weekly_shepherd:
+  name: "<white><bold>Master Shepherd"
+  description: "<gray>Gather <white>{target} wool <gray>from sheep flocks!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target_min: 800
+  target_max: 1500
+  requirements:
+    items: ["WHITE_WOOL", "LIGHT_GRAY_WOOL", "GRAY_WOOL", "BLACK_WOOL", "BROWN_WOOL", "RED_WOOL", "ORANGE_WOOL", "YELLOW_WOOL", "LIME_WOOL", "GREEN_WOOL", "CYAN_WOOL", "LIGHT_BLUE_WOOL", "BLUE_WOOL", "PURPLE_WOOL", "MAGENTA_WOOL", "PINK_WOOL"]
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [45, 90]
+    items:
+      - "SHEARS 3 {Enchantments:[{id:efficiency,lvl:5},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "WHITE_WOOL 256"
+      - "BED 16"
+  weight: 7
+  enabled: true
+
+weekly_treasure_collector:
+  name: "<gold><bold>Treasure Collector"
+  description: "<gray>Collect <gold>{target} rare drops <gray>from dangerous mobs!"
+  category: GATHERING
+  type: HUNTING
+  difficulty: HARD
+  target_min: 100
+  target_max: 250
+  requirements:
+    items: ["ENDER_PEARL", "BLAZE_ROD", "GHAST_TEAR", "PHANTOM_MEMBRANE", "SHULKER_SHELL", "NAUTILUS_SHELL", "HEART_OF_THE_SEA"]
+  rewards:
+    money: [5000, 10000]
+    experience: [2500, 5000]
+    quest_points: [75, 150]
+    items:
+      - "ENDER_PEARL 32"
+      - "TOTEM_OF_UNDYING 2"
+      - "ENCHANTED_GOLDEN_APPLE 5"
+  weight: 5
+  enabled: true
+
+# ========================================
+# WEEKLY COOKING QUESTS
+# ========================================
+
+weekly_master_chef:
+  name: "<yellow><bold>Master Chef"
+  description: "<gray>Cook <yellow>{target} food items <gray>for the week!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: MEDIUM
+  target_min: 500
+  target_max: 1000
+  requirements:
+    materials: ["COOKED_BEEF", "COOKED_PORKCHOP", "COOKED_CHICKEN", "COOKED_MUTTON", "COOKED_RABBIT", "COOKED_COD", "COOKED_SALMON", "BAKED_POTATO", "BREAD"]
+  rewards:
+    money: [2500, 5000]
+    experience: [1250, 2500]
+    quest_points: [40, 80]
+    items:
+      - "FURNACE 8"
+      - "SMOKER 4"
+      - "COOKED_BEEF 256"
+      - "GOLDEN_CARROT 64"
+  weight: 8
+  enabled: true
+
+weekly_grand_baker:
+  name: "<gold><bold>Grand Baker"
+  description: "<gray>Bake <gold>{target} complex food items <gray>this week!"
+  category: CRAFTING
+  type: CRAFTING
+  difficulty: HARD
+  target_min: 200
+  target_max: 500
+  requirements:
+    materials: ["BREAD", "CAKE", "PUMPKIN_PIE", "COOKIE", "MUSHROOM_STEW", "RABBIT_STEW", "BEETROOT_SOUP"]
+  rewards:
+    money: [3500, 7000]
+    experience: [1750, 3500]
+    quest_points: [55, 110]
+    items:
+      - "CAKE 32"
+      - "GOLDEN_CARROT 128"
+      - "ENCHANTED_GOLDEN_APPLE 3"
+  weight: 6
+  enabled: true
+
+# ========================================
+# WEEKLY SMELTING QUESTS
+# ========================================
+
+weekly_grand_smelter:
+  name: "<red><bold>Grand Smelter"
+  description: "<gray>Smelt <red>{target} items <gray>in your furnaces!"
+  category: CRAFTING
+  type: SMELTING
+  difficulty: HARD
+  target_min: 1000
+  target_max: 2500
+  requirements:
+    materials: ["IRON_INGOT", "GOLD_INGOT", "COPPER_INGOT", "GLASS", "STONE", "BRICK", "COOKED_BEEF", "COOKED_PORKCHOP", "COOKED_CHICKEN"]
+    from_smelting: true
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "BLAST_FURNACE 8"
+      - "SMOKER 8"
+      - "IRON_BLOCK 32"
+      - "GOLD_BLOCK 16"
+  weight: 7
+  enabled: true
+
+# ========================================
+# WEEKLY ALCHEMY QUESTS
+# ========================================
+
+weekly_grand_alchemist:
+  name: "<dark_purple><bold>Grand Alchemist"
+  description: "<gray>Brew <dark_purple>{target} potions <gray>this week!"
+  category: CRAFTING
+  type: BREWING
+  difficulty: HARD
+  target_min: 50
+  target_max: 150
+  requirements:
+    any_potion: true
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "BREWING_STAND 4"
+      - "BLAZE_POWDER 128"
+      - "GLASS_BOTTLE 128"
+      - "NETHER_WART 256"
+  weight: 6
+  enabled: true
+
+weekly_enchantment_master:
+  name: "<aqua><bold>Enchantment Master"
+  description: "<gray>Enchant <aqua>{target} items <gray>with powerful magic!"
+  category: CRAFTING
+  type: ENCHANTING
+  difficulty: HARD
+  target_min: 30
+  target_max: 100
+  requirements:
+    any_enchant: true
+  rewards:
+    money: [5000, 10000]
+    experience: [2500, 5000]
+    quest_points: [75, 150]
+    items:
+      - "ENCHANTING_TABLE 2"
+      - "BOOKSHELF 64"
+      - "ENCHANTED_BOOK 10"
+      - "LAPIS_BLOCK 16"
+  weight: 5
+  enabled: true
+
+# ========================================
+# WEEKLY TRAVEL QUESTS
+# ========================================
+
+weekly_marathon_runner:
+  name: "<green><bold>Marathon Runner"
+  description: "<gray>Travel <green>{target} blocks <gray>on foot this week!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target_min: 10000
+  target_max: 25000
+  requirements:
+    movement_type: "WALK"
+    worlds: ["world"]
+  rewards:
+    money: [2500, 5000]
+    experience: [1250, 2500]
+    quest_points: [40, 80]
+    items:
+      - "DIAMOND_BOOTS 1 {Enchantments:[{id:feather_falling,lvl:4},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "COOKED_BEEF 128"
+      - "GOLDEN_APPLE 8"
+  weight: 7
+  enabled: true
+
+weekly_ocean_voyager:
+  name: "<aqua><bold>Ocean Voyager"
+  description: "<gray>Sail <aqua>{target} blocks <gray>across the seas!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target_min: 8000
+  target_max: 20000
+  requirements:
+    movement_type: "BOAT"
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [45, 90]
+    items:
+      - "OAK_BOAT 16"
+      - "CHEST_BOAT 8"
+      - "TRIDENT 1"
+      - "HEART_OF_THE_SEA 1"
+  weight: 6
+  enabled: true
+
+weekly_sky_master:
+  name: "<white><bold>Sky Master"
+  description: "<gray>Soar <white>{target} blocks <gray>through the skies!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: HARD
+  target_min: 10000
+  target_max: 30000
+  requirements:
+    movement_type: "ELYTRA"
+  rewards:
+    money: [6000, 12000]
+    experience: [3000, 6000]
+    quest_points: [90, 180]
+    items:
+      - "ELYTRA 1 {Enchantments:[{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "FIREWORK_ROCKET 512"
+      - "PHANTOM_MEMBRANE 32"
+  weight: 4
+  enabled: true
+
+# ========================================
+# WEEKLY NETHER QUESTS
+# ========================================
+
+weekly_nether_miner:
+  name: "<dark_red><bold>Nether Miner"
+  description: "<gray>Mine <dark_red>{target} blocks <gray>in the Nether realm!"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target_min: 3000
+  target_max: 6000
+  requirements:
+    materials: ["NETHERRACK", "NETHER_QUARTZ_ORE", "NETHER_GOLD_ORE", "ANCIENT_DEBRIS", "BLACKSTONE", "BASALT", "SOUL_SAND", "SOUL_SOIL"]
+    worlds: ["world_nether"]
+  rewards:
+    money: [5000, 10000]
+    experience: [2500, 5000]
+    quest_points: [75, 150]
+    items:
+      - "NETHERITE_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:fortune,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "FIRE_RESISTANCE_POTION 32"
+      - "ANCIENT_DEBRIS 8"
+      - "GOLDEN_APPLE 16"
+  weight: 5
+  enabled: true
+
+weekly_ancient_debris_hunter:
+  name: "<dark_purple><bold>Ancient Debris Hunter"
+  description: "<gray>Find <dark_purple>{target} Ancient Debris <gray>in the Nether!"
+  category: GATHERING
+  type: MINING
+  difficulty: EXTREME
+  target_min: 20
+  target_max: 64
+  requirements:
+    materials: ["ANCIENT_DEBRIS"]
+    worlds: ["world_nether"]
+    y_max: 20
+  rewards:
+    money: [15000, 30000]
+    experience: [7500, 15000]
+    quest_points: [200, 400]
+    items:
+      - "NETHERITE_INGOT 16"
+      - "DIAMOND 128"
+      - "ENCHANTED_GOLDEN_APPLE 10"
+      - "TOTEM_OF_UNDYING 3"
+  weight: 2
+  enabled: true
+
+# ========================================
+# WEEKLY COMBAT VARIATION QUESTS
+# ========================================
+
+weekly_undead_slayer:
+  name: "<green><bold>Undead Slayer"
+  description: "<gray>Eliminate <green>{target} undead creatures<gray>!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 600
+  target_max: 1200
+  requirements:
+    mob_types: ["ZOMBIE", "SKELETON", "ZOMBIE_VILLAGER", "HUSK", "STRAY", "DROWNED", "WITHER_SKELETON", "SKELETON_HORSE", "ZOMBIE_HORSE"]
+  rewards:
+    money: [3500, 7000]
+    experience: [1750, 3500]
+    quest_points: [55, 110]
+    items:
+      - "DIAMOND_SWORD 1 {Enchantments:[{id:smite,lvl:5},{id:looting,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "GOLDEN_APPLE 12"
+      - "TOTEM_OF_UNDYING 1"
+  weight: 7
+  enabled: true
+
+weekly_arthropod_exterminator:
+  name: "<dark_gray><bold>Arthropod Exterminator"
+  description: "<gray>Exterminate <dark_gray>{target} arthropod creatures<gray>!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: MEDIUM
+  target_min: 400
+  target_max: 800
+  requirements:
+    mob_types: ["SPIDER", "CAVE_SPIDER", "SILVERFISH", "ENDERMITE"]
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [50, 100]
+    items:
+      - "DIAMOND_SWORD 1 {Enchantments:[{id:bane_of_arthropods,lvl:5},{id:looting,lvl:3},{id:unbreaking,lvl:3}]}"
+      - "STRING 256"
+      - "SPIDER_EYE 128"
+  weight: 6
+  enabled: true
+
+weekly_phantom_hunter:
+  name: "<light_purple><bold>Phantom Hunter"
+  description: "<gray>Hunt <light_purple>{target} Phantoms <gray>in the night sky!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target_min: 50
+  target_max: 150
+  requirements:
+    mob_types: ["PHANTOM"]
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "BOW 1 {Enchantments:[{id:power,lvl:5},{id:infinity,lvl:1},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "PHANTOM_MEMBRANE 64"
+      - "ELYTRA 1"
+  weight: 5
+  enabled: true
+
+# ========================================
+# WEEKLY MISC QUESTS
+# ========================================
+
+weekly_obsidian_collector:
+  name: "<dark_purple><bold>Obsidian Collector"
+  description: "<gray>Collect <dark_purple>{target} obsidian <gray>blocks!"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target_min: 100
+  target_max: 300
+  requirements:
+    materials: ["OBSIDIAN"]
+  rewards:
+    money: [4000, 8000]
+    experience: [2000, 4000]
+    quest_points: [60, 120]
+    items:
+      - "OBSIDIAN 128"
+      - "DIAMOND_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "ENDER_CHEST 4"
+  weight: 5
+  enabled: true
+
+weekly_deepslate_excavator:
+  name: "<dark_gray><bold>Deepslate Excavator"
+  description: "<gray>Excavate <dark_gray>{target} deepslate <gray>from below!"
+  category: GATHERING
+  type: MINING
+  difficulty: MEDIUM
+  target_min: 1500
+  target_max: 3000
+  requirements:
+    materials: ["DEEPSLATE", "COBBLED_DEEPSLATE"]
+    y_max: 0
+  rewards:
+    money: [3000, 6000]
+    experience: [1500, 3000]
+    quest_points: [45, 90]
+    items:
+      - "DIAMOND_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:unbreaking,lvl:3}]}"
+      - "DEEPSLATE 256"
+      - "NIGHT_VISION_POTION 16"
+  weight: 7
+  enabled: true
+
+# ========================================
+# CONFIGURATION NOTES
+# ========================================
+#
+# Weekly Quest Features:
+# - Reset every Monday at midnight (configurable in main config)
+# - Higher targets and better rewards than daily quests
+# - Players can have multiple weekly quests active
+# - Progress persists through daily resets
+#
+# Target Scaling:
+# - Weekly targets are 5-10x higher than daily equivalents
+# - Rewards are proportionally better
+# - Quest points are exclusive to weekly/monthly quests
+#
+# Special Requirements:
+# - biome_discovery: Count unique biomes discovered
+# - boss_only: Only boss-like creatures count
+# - treasure_only: Only treasure items from fishing
+# - no_death: Quest fails if player dies
+# - playtime: Count active playtime
+# - any_job: Any job activity counts
+# - categories: Crafting categories (TOOLS, ARMOR, etc.)
+#
+# Quest Points:
+# - Special currency earned from weekly/monthly quests
+# - Can be used for exclusive rewards or upgrades
+# - Encourages long-term engagement
+#
+# ========================================

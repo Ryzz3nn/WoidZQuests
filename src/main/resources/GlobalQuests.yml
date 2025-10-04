@@ -1,0 +1,299 @@
+# ========================================
+# WoidZQuests - Global Quests Configuration
+# ========================================
+# Global quests are server-wide objectives that all players contribute to
+# These quests reset based on their schedule and have collective progress
+# 
+# Quest Format:
+# quest_id:
+#   name: "Display name for the quest"
+#   description: "Description shown to players"
+#   category: GATHERING/COMBAT/CRAFTING/EXPLORATION/SURVIVAL/JOBS/BUILDING/SPECIAL
+#   type: MINING/WOODCUTTING/FARMING/FISHING/HUNTING/BUILDING/CRAFTING/etc
+#   difficulty: EASY/MEDIUM/HARD/EXTREME
+#   target: 1000  # Total amount needed
+#   duration: 7d  # How long the quest lasts (1h, 6h, 1d, 7d, 30d)
+#   requirements:  # Optional filters
+#     materials: ["DIAMOND_ORE", "EMERALD_ORE"]
+#     worlds: ["world", "world_nether"]
+#     biomes: ["mountains", "desert"]
+#     y_min: -64
+#     y_max: 320
+#   rewards:  # Rewards when quest is completed
+#     money: 50000
+#     experience: 5000
+#     items:
+#       - "DIAMOND 64"
+#       - "EMERALD 32"
+#     commands:  # Commands run when completed (use {player} for player name)
+#       - "broadcast &7[&d&lGlobal Quest&7] &7The server has completed: &d{quest_name}&7!"
+#   enabled: true
+
+# ========================================
+# MINING GLOBAL QUESTS
+# ========================================
+
+global_diamond_rush:
+  name: "<light_purple><bold>Diamond Rush"
+  description: "<gray>Mine <light_purple>{target} Diamond Ore <gray>as a server!"
+  category: GATHERING
+  type: MINING
+  difficulty: HARD
+  target: 5000
+  duration: 7d
+  requirements:
+    materials: ["DIAMOND_ORE", "DEEPSLATE_DIAMOND_ORE"]
+    worlds: ["world"]
+  rewards:
+    money: 100000
+    experience: 10000
+    quest_points: 10
+    items:
+      - "DIAMOND_BLOCK 10"
+      - "EXPERIENCE_BOTTLE 64"
+    commands:
+      - "qp give {player} 10"
+      - "broadcast <gray>[<light_purple><bold>Global Quest<gray>] <gray>The server found <light_purple>{target} diamonds<gray>! Everyone gets rewards!"
+  enabled: true
+
+global_ore_expedition:
+  name: "<gold><bold>Ore Expedition"
+  description: "<gray>Collectively mine <gold>{target} <gray>valuable ores!"
+  category: GATHERING
+  type: MINING
+  difficulty: EXTREME
+  target: 25000
+  duration: 14d
+  requirements:
+    materials: ["IRON_ORE", "GOLD_ORE", "DIAMOND_ORE", "EMERALD_ORE", "LAPIS_ORE", "REDSTONE_ORE", "COAL_ORE", "COPPER_ORE", "DEEPSLATE_IRON_ORE", "DEEPSLATE_GOLD_ORE", "DEEPSLATE_DIAMOND_ORE", "DEEPSLATE_EMERALD_ORE", "DEEPSLATE_LAPIS_ORE", "DEEPSLATE_REDSTONE_ORE", "DEEPSLATE_COAL_ORE", "DEEPSLATE_COPPER_ORE"]
+    y_min: -64
+    y_max: 64
+  rewards:
+    money: 250000
+    experience: 25000
+    items:
+      - "NETHERITE_INGOT 5"
+      - "DIAMOND 128"
+      - "EMERALD 64"
+    commands:
+      - "broadcast <gray>[<gold><bold>Ore Expedition<gray>] <gray>Completed! The server's mining efforts have paid off!"
+  enabled: true
+
+# ========================================
+# FARMING GLOBAL QUESTS
+# ========================================
+
+global_harvest_festival:
+  name: "<green><bold>Harvest Festival"
+  description: "<gray>Harvest <green>{target} crops <gray>together for the festival!"
+  category: GATHERING
+  type: FARMING
+  difficulty: MEDIUM
+  target: 50000
+  duration: 10d
+  requirements:
+    materials: ["WHEAT", "CARROTS", "POTATOES", "BEETROOTS", "NETHER_WART"]
+  rewards:
+    money: 75000
+    experience: 7500
+    items:
+      - "GOLDEN_CARROT 64"
+      - "BREAD 128"
+      - "BAKED_POTATO 64"
+    commands:
+      - "broadcast <gray>[<green><bold>Harvest Festival<gray>] <gray>The server's crops are bountiful! Feast time!"
+  enabled: true
+
+# ========================================
+# COMBAT GLOBAL QUESTS
+# ========================================
+
+global_monster_hunt:
+  name: "<red><bold>Monster Purge"
+  description: "<gray>Eliminate <red>{target} hostile mobs <gray>to protect the server!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: HARD
+  target: 119300
+  duration: 7d
+  requirements:
+    materials: ["ANY_HOSTILE_MOB"]
+    worlds: ["world", "world_nether", "world_the_end"]
+  rewards:
+    money: 12000
+    experience: 2500
+    quest_points: 250
+    items:
+      - "ENCHANTED_GOLDEN_APPLE 5"
+      - "TOTEM_OF_UNDYING 3"
+    commands:
+      - "broadcast <gray>[<red><bold>Monster Purge<gray>] <gray>The server is now safer! Great work, warriors!"
+  enabled: true
+
+global_boss_slayer:
+  name: "<dark_red><bold>Boss Slayer Campaign"
+  description: "<gray>Defeat <dark_red>{target} boss-like creatures <gray>as a server!"
+  category: COMBAT
+  type: HUNTING
+  difficulty: EXTREME
+  target: 100
+  duration: 30d
+  requirements:
+    boss_only: true
+    worlds: ["world", "world_nether", "world_the_end"]
+  rewards:
+    money: 500000
+    experience: 50000
+    items:
+      - "NETHERITE_SWORD 1 {Enchantments:[{id:sharpness,lvl:5},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "ELYTRA 1"
+      - "DRAGON_HEAD 1"
+    commands:
+      - "broadcast <gray>[<dark_red><bold>Boss Slayer<gray>] <gray>The server's champions have triumphed over the greatest threats!"
+  enabled: true
+
+# ========================================
+# BUILDING GLOBAL QUESTS
+# ========================================
+
+global_construction:
+  name: "<yellow><bold>Mega Construction"
+  description: "<gray>Place <yellow>{target} blocks <gray>to build amazing structures!"
+  category: BUILDING
+  type: BUILDING
+  difficulty: HARD
+  target: 1000000
+  duration: 21d
+  requirements:
+    materials: ["STONE", "COBBLESTONE", "STONE_BRICKS", "OAK_PLANKS", "SPRUCE_PLANKS", "BIRCH_PLANKS", "JUNGLE_PLANKS", "ACACIA_PLANKS", "DARK_OAK_PLANKS", "MANGROVE_PLANKS", "CHERRY_PLANKS", "BAMBOO_PLANKS"]
+  rewards:
+    money: 200000
+    experience: 20000
+    items:
+      - "BEACON 3"
+      - "DIAMOND_BLOCK 20"
+    commands:
+      - "broadcast <gray>[<yellow><bold>Mega Construction<gray>] <gray>The server has built something magnificent!"
+  enabled: true
+
+# ========================================
+# EXPLORATION GLOBAL QUESTS
+# ========================================
+
+global_world_explorer:
+  name: "<aqua><bold>World Exploration"
+  description: "<gray>Collectively travel <aqua>{target}km <gray>across all dimensions!"
+  category: EXPLORATION
+  type: EXPLORATION
+  difficulty: MEDIUM
+  target: 100000  # 100km in blocks
+  duration: 14d
+  requirements:
+    worlds: ["world", "world_nether", "world_the_end"]
+  rewards:
+    money: 100000
+    experience: 10000
+    items:
+      - "ELYTRA 1"
+      - "FIREWORK_ROCKET 128"
+      - "ENDER_PEARL 64"
+    commands:
+      - "broadcast <gray>[<aqua><bold>World Exploration<gray>] <gray>The server has mapped vast territories!"
+  enabled: true
+
+# ========================================
+# JOBS GLOBAL QUESTS (Requires Jobs Reborn)
+# ========================================
+
+global_job_mastery:
+  name: "<light_purple><bold>Job Mastery Challenge"
+  description: "<gray>Gain <light_purple>{target} total job XP <gray>across all jobs!"
+  category: JOBS
+  type: JOBS_XP
+  difficulty: EXTREME
+  target: 1000000
+  duration: 30d
+  requirements:
+    jobs: ["Miner", "Woodcutter", "Farmer", "Fisherman", "Hunter", "Builder", "Crafter"]
+  rewards:
+    money: 300000
+    experience: 30000
+    items:
+      - "DIAMOND_PICKAXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:fortune,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+      - "DIAMOND_AXE 1 {Enchantments:[{id:efficiency,lvl:5},{id:fortune,lvl:3},{id:unbreaking,lvl:3},{id:mending,lvl:1}]}"
+    commands:
+      - "broadcast <gray>[<light_purple><bold>Job Mastery<gray>] <gray>The server has achieved incredible job expertise!"
+  enabled: true
+
+# ========================================
+# SPECIAL EVENT QUESTS
+# ========================================
+
+global_server_anniversary:
+  name: "<dark_purple><bold>Server Anniversary"
+  description: "<gray>Celebrate by completing <dark_purple>{target} <gray>various activities!"
+  category: SPECIAL
+  type: GLOBAL
+  difficulty: HARD
+  target: 50000
+  duration: 7d
+  requirements:
+    any_activity: true  # Counts any quest progress
+  rewards:
+    money: 1000000
+    experience: 100000
+    items:
+      - "NETHER_STAR 10"
+      - "ENCHANTED_GOLDEN_APPLE 20"
+      - "CAKE 64"
+    commands:
+      - "broadcast <gray>[<dark_purple><bold>Anniversary<gray>] <gray>Happy Anniversary! Thanks for making this server amazing!"
+      - "firework ~ ~ ~ {LifeTime:40,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Explosions:[{Type:1,Colors:[I;16711680,65280,255]}]}}}}"
+  enabled: false  # Enable for special events
+
+# ========================================
+# CONFIGURATION NOTES
+# ========================================
+# 
+# Duration formats:
+# - 1h = 1 hour
+# - 6h = 6 hours  
+# - 1d = 1 day
+# - 7d = 1 week
+# - 30d = 1 month
+#
+# Difficulty multipliers (affects rewards):
+# - EASY: 1.0x
+# - MEDIUM: 1.5x
+# - HARD: 2.0x
+# - EXTREME: 3.0x
+#
+# Item format: "MATERIAL AMOUNT [NBT]"
+# Examples:
+# - "DIAMOND 64"
+# - "DIAMOND_SWORD 1 {Enchantments:[{id:sharpness,lvl:5}]}"
+#
+# Color Guidelines (MiniMessage):
+# - Use <color> tags instead of & codes
+# - Main text: <gray>
+# - Highlights: <yellow>, <aqua>, <green>, <gold>
+# - Special items: <light_purple>, <red>, <blue>
+# - Rare items: <dark_purple>, <dark_red>
+#
+# Commands support placeholders:
+# - {player} = Player name who contributed
+# - {quest_name} = Quest display name
+# - {target} = Quest target amount
+# - {progress} = Current progress
+#
+# Requirements are optional filters:
+# - materials: List of materials that count
+# - worlds: List of worlds where progress counts
+# - biomes: List of biomes where progress counts
+# - y_min/y_max: Y-level range
+# - mob_types: Specific mob types for hunting
+# - jobs: Specific jobs for job quests
+# - boss_only: Only count boss-like mobs
+# - any_activity: Count any quest activity
+#
+# ========================================

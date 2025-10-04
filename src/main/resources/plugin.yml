@@ -1,0 +1,32 @@
+name: WoidZQuests
+version: '${version}'
+main: com.ryzz3nn.woidzquests.WoidZQuests
+api-version: '1.21'
+author: Ryzz3nn
+description: 'Advanced Quest System for Paper Minecraft Servers'
+website: 'https://github.com/Ryzz3nn/WoidZQuests'
+
+depend: []
+softdepend: [Vault, Jobs, PlaceholderAPI, WoidZFishing, Nexo]
+
+commands:
+  quests:
+    description: 'Open the quests GUI'
+    usage: '/quests'
+    aliases: [quest, q]
+  woidzquests:
+    description: 'WoidZQuests admin commands'
+    usage: '/woidzquests <reload|help>'
+    aliases: [wq, woidzquest]
+    permission: woidzquests.admin
+
+permissions:
+  woidzquests.admin:
+    description: 'Access to admin commands'
+    default: op
+  woidzquests.use:
+    description: 'Access to use quests'
+    default: true
+  woidzquests.gui:
+    description: 'Access to quest GUI'
+    default: true

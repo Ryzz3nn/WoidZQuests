@@ -1,0 +1,168 @@
+# WoidZQuests Messages
+# Plugin by Ryzz3nn  
+# ALL TEXT USES MINIMESSAGE FORMAT: <color> instead of &color
+# Legacy &7 codes will also work but <gray> is preferred
+
+# General Messages
+prefix: "<gray>[<light_purple><bold>WoidZQuests<gray>]"
+no-permission: "<gray>[<red><bold>!</bold></red><gray>]<reset> You don't have permission to use this command."
+player-only: "<gray>[<red><bold>!</bold></red><gray>]<reset> This command can only be used by players."
+reload-success: "<gray>[<green><bold>✓</bold></green><gray>]<reset> Configuration and messages reloaded successfully!"
+unknown-command: "<gray>[<red><bold>!</bold></red><gray>]<reset> Unknown command. Use <light_purple>/woidzquests help<reset> for help."
+
+# Quest Messages
+quest:
+  completed: "<gray>[<green><bold>✓<gray>] <gray>Quest completed: <light_purple>{quest_name}<gray>! Claim your reward with <light_purple>/quests<gray>."
+  progress: "<gray>[<light_purple><bold>◆<gray>] <gray>Quest progress: <light_purple>{quest_name} <gray>(<light_purple>{progress}<gray>/<light_purple>{target}<gray>)"
+  started: "<gray>[<green><bold>+<gray>] <gray>New quest started: <light_purple>{quest_name}"
+  failed: "<gray>[<red><bold>✗<gray>] <gray>Quest failed: <light_purple>{quest_name}"
+  reward-claimed: "<gray>[<green><bold>$<gray>] <gray>Reward claimed for quest: <light_purple>{quest_name}"
+  no-active: "<gray>[<red><bold>!<gray>] <gray>You don't have any active quests."
+  max-active: "<gray>[<red><bold>!<gray>] <gray>You already have the maximum number of active quests (<light_purple>{max}<gray>)."
+  reroll-success: "<gray>[<green><bold>↻<gray>] <gray>Quest rerolled successfully!"
+  reroll-failed: "<gray>[<red><bold>!<gray>] <gray>Failed to reroll quest. Try again later."
+  reroll-no-left: "<gray>[<red><bold>!<gray>] <gray>You have no quest rerolls left today."
+  already-completed: "<gray>[<red><bold>!<gray>] <gray>This quest is already completed!"
+  not-found: "<gray>[<red><bold>!<gray>] <gray>Quest not found."
+  tracking-enabled: "<gray>[<green><bold>👁<gray>] <gray>Now tracking quest: <light_purple>{quest_name}"
+  tracking-disabled: "<gray>[<red><bold>👁<gray>] <gray>No longer tracking quest: <light_purple>{quest_name}"
+
+# Quest Types
+quest-types:
+  mining: "<gray>⛏ <light_purple>Mining Quest"
+  woodcutting: "<gray>🪓 <light_purple>Woodcutting Quest"
+  farming: "<gray>🌾 <light_purple>Farming Quest"
+  fishing: "<gray>🎣 <light_purple>Fishing Quest"
+  hunting: "<gray>⚔ <light_purple>Hunting Quest"
+  building: "<gray>🏗 <light_purple>Building Quest"
+  crafting: "<gray>🔨 <light_purple>Crafting Quest"
+  exploration: "<gray>🗺 <light_purple>Exploration Quest"
+  survival: "<gray>💚 <light_purple>Survival Quest"
+  jobs: "<gray>💼 <light_purple>Job Quest"
+
+# Quest Difficulties
+quest-difficulties:
+  easy: "<green><bold>Easy"
+  medium: "<yellow><bold>Medium"
+  hard: "<red><bold>Hard"
+  extreme: "<dark_red><bold>Extreme"
+
+# Reward Messages
+rewards:
+  money: "<gray>💰 <light_purple>{amount} coins"
+  experience: "<gray>✨ <light_purple>{amount} XP"
+  items: "<gray>🎁 <light_purple>{items}"
+  job-xp: "<gray>💼 <light_purple>{amount} {job} XP"
+
+# GUI Messages
+gui:
+  # Menu Titles (Users can customize all menu titles here)
+  titles:
+    main-menu: "<gray>Quests - Main Menu"
+    daily-quests: "<gray>Daily Quests - Your Quests"
+    weekly-quests: "<gray>Weekly Quests - Your Quests"
+    global-quests: "<gray>Global Quests - Server Quests"
+    quest-points: "<gray>Quest Points - Information"
+    shop: "<light_purple><bold>Quest Points Shop"
+  
+  quest-menu:
+    title: "&7[&d&lQuests&7] &7Your Active Quests"
+    no-quests: "&7You have no active quests."
+    click-to-claim: "&7Click to claim reward!"
+    click-to-track: "&7Click to track this quest"
+    click-to-untrack: "&7Click to stop tracking"
+    progress-bar: "&7Progress: &d{progress}&7/&d{target}"
+    
+  quest-item:
+    active:
+      - "&7{description}"
+      - ""
+      - "&7Progress: &d{progress}&7/&d{target}"
+      - "&7Difficulty: {difficulty}"
+      - "&7Reward: {reward}"
+      - ""
+      - "&7Left-click to track/untrack"
+      - "&7Right-click for details"
+    
+    completed:
+      - "&7{description}"
+      - ""
+      - "&a&lCOMPLETED!"
+      - "&7Reward: {reward}"
+      - ""
+      - "&7Click to claim reward!"
+    
+    locked:
+      - "&7Complete more quests to unlock"
+      - "&7additional quest slots!"
+
+# Command Messages
+commands:
+  help:
+    - "&7[&d&lWoidZQuests Help&7]"
+    - "&d/quests &7- Open quest menu"
+    - "&d/woidzquests reload &7- Reload configuration"
+    - "&d/woidzquests help &7- Show this help"
+  
+  admin-help:
+    - "&7[&d&lWoidZQuests Admin Help&7]"
+    - "&d/wq reload &7- Reload plugin configuration"
+    - "&d/wq quest <player> start <id> &7- Start quest for player"
+    - "&d/wq quest <player> complete <id> &7- Complete quest for player"
+    - "&d/wq quest <player> progress <id> <amount> &7- Set quest progress"
+    - "&d/wq player <player> reset &7- Reset player data"
+    - "&d/wq debug &7- Toggle debug mode"
+
+# Error Messages
+errors:
+  database: "&7[&c&l!&7] &7Database error occurred. Please contact an administrator."
+  config: "&7[&c&l!&7] &7Configuration error. Check console for details."
+  integration: "&7[&c&l!&7] &7Integration error with {plugin}."
+  quest-load: "&7[&c&l!&7] &7Failed to load quest data."
+  player-data: "&7[&c&l!&7] &7Failed to load player data."
+
+# Success Messages
+success:
+  quest-started: "&7[&a&l+&7] &7Quest started: &d{quest_name}"
+  quest-completed: "&7[&a&l✓&7] &7Quest completed: &d{quest_name}"
+  reward-given: "&7[&a&l$&7] &7Reward given: {reward}"
+  data-saved: "&7[&a&l💾&7] &7Data saved successfully."
+  
+# Integration Messages
+integrations:
+  vault:
+    enabled: "&7[&a&l$&7] &7Vault integration enabled - Economy features available!"
+    disabled: "&7[&c&l$&7] &7Vault not found - Economy features disabled."
+  
+  jobs:
+    enabled: "&7[&a&l💼&7] &7Jobs Reborn integration enabled - Job quests available!"
+    disabled: "&7[&c&l💼&7] &7Jobs Reborn not found - Job quests disabled."
+  
+  placeholderapi:
+    enabled: "&7[&a&l%&7] &7PlaceholderAPI integration enabled!"
+    disabled: "&7[&c&l%&7] &7PlaceholderAPI not found - Placeholders disabled."
+
+# Progress Messages
+progress:
+  # Mining
+  block-mined: "&7[&d&l⛏&7] &7Mined &d{amount} {material} &7(&d{progress}&7/&d{target}&7)"
+  
+  # Fishing
+  fish-caught: "&7[&d&l🎣&7] &7Caught &d{amount} {fish} &7(&d{progress}&7/&d{target}&7)"
+  
+  # Hunting
+  mob-killed: "&7[&d&l⚔&7] &7Killed &d{amount} {mob} &7(&d{progress}&7/&d{target}&7)"
+  
+  # Crafting
+  item-crafted: "&7[&d&l🔨&7] &7Crafted &d{amount} {item} &7(&d{progress}&7/&d{target}&7)"
+  
+  # Building
+  block-placed: "&7[&d&l🏗&7] &7Placed &d{amount} {material} &7(&d{progress}&7/&d{target}&7)"
+  
+  # Exploration
+  distance-traveled: "&7[&d&l🗺&7] &7Traveled &d{distance}m &7(&d{progress}&7/&d{target}&7)"
+  biome-discovered: "&7[&d&l🗺&7] &7Discovered biome: &d{biome} &7(&d{progress}&7/&d{target}&7)"
+  
+  # Jobs
+  job-xp-gained: "&7[&d&l💼&7] &7Gained &d{amount} {job} XP &7(&d{progress}&7/&d{target}&7)"
+  job-money-earned: "&7[&d&l💼&7] &7Earned &d${amount} &7from {job} &7(&d{progress}&7/&d{target}&7)"

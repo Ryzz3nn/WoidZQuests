@@ -1,0 +1,262 @@
+# ========================================
+# WoidZQuests - Quest Points Shop Configuration
+# ========================================
+# Fully modular shop system where players can spend Quest Points
+# Server owners can customize everything: GUI size, items, costs, limits
+# ALL TEXT USES MINIMESSAGE FORMAT: <color> instead of &color
+
+# ========================================
+# SHOP SETTINGS
+# ========================================
+# NOTE: Menu title is now configured in messages.yml under gui.titles.shop
+shop:
+  # GUI Configuration
+  gui:
+    size: 54  # Must be multiple of 9 (9, 18, 27, 36, 45, 54)
+    
+  # Currency Settings (placeholder for quest points balance)
+  currency:
+    placeholder: "%coinsengine_balance_raw_qp%"  # Placeholder to get player's QP balance
+    name: "Quest Points"
+    symbol: "QP"
+    
+  # Fill empty slots with glass panes
+  fill_glass: true
+  glass_material: "GRAY_STAINED_GLASS_PANE"
+
+# ========================================
+# SHOP ITEMS
+# ========================================
+# Format:
+# slot_number:
+#   material: "MATERIAL_NAME"
+#   amount: 1
+#   name: "Display Name"
+#   lore:
+#     - "Line 1"
+#     - "Line 2"
+#   cost: 10  # Quest Points required
+#   commands:  # Commands to run when purchased
+#     - "give {player} diamond 5"
+#     - "broadcast {player} bought diamonds!"
+#   purchase_limits:  # Optional time-based limits
+#     daily: 3      # Can buy 3 times per day
+#     weekly: 5     # Can buy 5 times per week
+#     monthly: 10   # Can buy 10 times per month
+#   enabled: true
+
+items:
+  # Slot 10 - Diamond Package
+  10:
+    material: "DIAMOND"
+    amount: 5
+    name: "<aqua><bold>Diamond Package</bold></aqua>"
+    lore:
+      - ""
+      - "<!italic><gray>A small package of precious diamonds"
+      - "<!italic><gray>to help with your adventures!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <aqua>5x Diamond"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>10 QP"
+      - "<!italic><gray>Daily Limit: <yellow>3 purchases"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 10
+    commands:
+      - "give {player} diamond 5"
+    purchase_limits:
+      daily: 3
+    enabled: true
+
+  # Slot 12 - Experience Bottle
+  12:
+    material: "EXPERIENCE_BOTTLE"
+    amount: 16
+    name: "<green><bold>Experience Bundle</bold></green>"
+    lore:
+      - ""
+      - "<!italic><gray>Bottled experience to boost"
+      - "<!italic><gray>your enchanting endeavors!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <green>16x Experience Bottle"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>5 QP"
+      - "<!italic><gray>Daily Limit: <yellow>5 purchases"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 5
+    commands:
+      - "give {player} experience_bottle 16"
+    purchase_limits:
+      daily: 5
+    enabled: true
+
+  # Slot 14 - Golden Apple
+  14:
+    material: "GOLDEN_APPLE"
+    amount: 3
+    name: "<gold><bold>Golden Apples</bold></gold>"
+    lore:
+      - ""
+      - "<!italic><gray>Delicious golden apples that provide"
+      - "<!italic><gray>regeneration and absorption!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <gold>3x Golden Apple"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>8 QP"
+      - "<!italic><gray>Daily Limit: <yellow>2 purchases"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 8
+    commands:
+      - "give {player} golden_apple 3"
+    purchase_limits:
+      daily: 2
+    enabled: true
+
+  # Slot 16 - Enchanted Book
+  16:
+    material: "ENCHANTED_BOOK"
+    amount: 1
+    name: "<light_purple><bold>Random Enchanted Book</bold></light_purple>"
+    lore:
+      - ""
+      - "<!italic><gray>A mysterious book containing"
+      - "<!italic><gray>a random powerful enchantment!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <light_purple>1x Random Enchanted Book"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>15 QP"
+      - "<!italic><gray>Weekly Limit: <yellow>2 purchases"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 15
+    commands:
+      - "give {player} enchanted_book 1"
+    purchase_limits:
+      weekly: 2
+    enabled: true
+
+  # Slot 28 - Netherite Ingot
+  28:
+    material: "NETHERITE_INGOT"
+    amount: 1
+    name: "<dark_red><bold>Netherite Ingot</bold></dark_red>"
+    lore:
+      - ""
+      - "<!italic><gray>The strongest material known"
+      - "<!italic><gray>to craft the ultimate gear!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <dark_red>1x Netherite Ingot"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>50 QP"
+      - "<!italic><gray>Weekly Limit: <yellow>1 purchase"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 50
+    commands:
+      - "give {player} netherite_ingot 1"
+    purchase_limits:
+      weekly: 1
+    enabled: true
+
+  # Slot 30 - Elytra
+  30:
+    material: "ELYTRA"
+    amount: 1
+    name: "<white><bold>Elytra Wings</bold></white>"
+    lore:
+      - ""
+      - "<!italic><gray>Soar through the skies with"
+      - "<!italic><gray>these magnificent wings!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <white>1x Elytra (Unbreaking III)"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>100 QP"
+      - "<!italic><gray>Monthly Limit: <yellow>1 purchase"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 100
+    commands:
+      - "give {player} elytra 1"
+    purchase_limits:
+      monthly: 1
+    enabled: true
+
+  # Slot 32 - Money Pouch
+  32:
+    material: "GOLD_INGOT"
+    amount: 1
+    name: "<yellow><bold>Money Pouch</bold></yellow>"
+    lore:
+      - ""
+      - "<!italic><gray>A hefty sum of money to"
+      - "<!italic><gray>boost your economy!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <yellow>$10,000"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>25 QP"
+      - "<!italic><gray>Daily Limit: <yellow>2 purchases"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 25
+    commands:
+      - "eco give {player} 10000"
+    purchase_limits:
+      daily: 2
+    enabled: true
+
+  # Slot 34 - Special Crate Key
+  34:
+    material: "TRIPWIRE_HOOK"
+    amount: 1
+    name: "<gold><bold>Premium Crate Key</bold></gold>"
+    lore:
+      - ""
+      - "<!italic><gray>Unlock premium rewards from"
+      - "<!italic><gray>the special crate system!"
+      - ""
+      - "<!italic><yellow>Contains:"
+      - "<!italic><gray>• <gold>1x Premium Crate Key"
+      - ""
+      - "<!italic><gold>Cost: <light_purple>20 QP"
+      - "<!italic><gray>Weekly Limit: <yellow>3 purchases"
+      - ""
+      - "<!italic><green>Click to purchase!"
+    cost: 20
+    commands:
+      - "crates give {player} premium 1"
+    purchase_limits:
+      weekly: 3
+    enabled: true
+
+# ========================================
+# NAVIGATION ITEMS
+# ========================================
+navigation:
+  # Back button to Quest Points GUI
+  back_button:
+    slot: 49  # Bottom middle
+    material: "BARRIER"
+    name: "<red><bold>← Back</bold></red>"
+    lore:
+      - ""
+      - "<!italic><gray>Return to Quest Points menu"
+
+# ========================================
+# MESSAGES
+# ========================================
+messages:
+  purchase_success: "<gray>[<green><bold>✓</bold></green><gray>]<reset> Successfully purchased <yellow>{item}<reset> for <light_purple>{cost} QP<reset>!"
+  insufficient_funds: "<gray>[<red><bold>!</bold></red><gray>]<reset> You need <light_purple>{cost} QP<reset> but only have <light_purple>{balance} QP<reset>!"
+  purchase_limit_reached: "<gray>[<red><bold>!</bold></red><gray>]<reset> You've reached the {limit_type} purchase limit for this item!"
+  item_disabled: "<gray>[<red><bold>!</bold></red><gray>]<reset> This item is currently unavailable!"
+  shop_opened: "<gray>[<light_purple><bold>★</bold></light_purple><gray>]<reset> Welcome to the Quest Points Shop!"

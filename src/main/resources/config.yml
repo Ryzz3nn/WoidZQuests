@@ -1,0 +1,287 @@
+# WoidZQuests Configuration
+# Plugin by Ryzz3nn
+
+# Server Information
+server:
+  name: "WoidZ Dev Server"
+
+# Database Configuration
+database:
+  path: "plugins/WoidZQuests/data.db"
+  connection-pool-size: 10
+  connection-timeout: 30000
+
+# Quest System Configuration
+quests:
+  # Maximum active quests per player
+  max-active: 3
+  
+  # Daily quest rerolls allowed
+  daily-rerolls: 3
+  
+  # Weekly quest rerolls allowed
+  weekly-rerolls: 1
+  
+  # Auto-assign quests on join
+  auto-assign: true
+  
+  # Quest difficulty scaling
+  difficulty:
+    easy-multiplier: 1.0
+    medium-multiplier: 1.5
+    hard-multiplier: 2.0
+    extreme-multiplier: 3.0
+  
+  # Anti-cheese settings
+  anti-cheese:
+    # Track placed blocks to prevent mining cheese
+    track-placed-blocks: true
+    
+    # Only count mature crops
+    mature-crops-only: true
+    
+    # Movement throttling (ticks)
+    movement-throttle: 20
+    
+    # AFK detection (seconds)
+    afk-timeout: 300
+    
+    # Smelting rate limit (items per second)
+    smelting-rate-limit: 10
+
+# Reward Configuration
+rewards:
+  # Money rewards (requires Vault)
+  money:
+    enabled: true
+    easy-range: [100, 500]
+    medium-range: [500, 1500]
+    hard-range: [1500, 5000]
+    extreme-range: [5000, 15000]
+  
+  # Experience rewards
+  experience:
+    enabled: true
+    easy-range: [50, 200]
+    medium-range: [200, 500]
+    hard-range: [500, 1200]
+    extreme-range: [1200, 3000]
+  
+  # Item rewards
+  items:
+    enabled: true
+    # Custom item rewards can be defined here
+
+# GUI Configuration
+gui:
+  # ============================================
+  # Filler Item Configuration (APPLIES TO ALL GUIS)
+  # ============================================
+  # This filler is used in:
+  # - Main Quest Menu (/quests)
+  # - Daily/Weekly/Global Quest GUIs
+  # - Quest Points GUI
+  # - Quest Shop GUI
+  filler:
+    # Enable custom Nexo/Oraxen/ItemsAdder item as filler
+    use-custom-item: true
+    
+    # Custom item ID from Nexo
+    # Just use the item ID directly (e.g., "guiblank")
+    # The "nexo:" prefix will be stripped automatically if present
+    custom-item-id: "guiblank"
+    
+    # Fallback vanilla item if custom item fails to load
+    # Uses GRAY_STAINED_GLASS_PANE by default (hardcoded in plugin)
+    # Custom filler should use PAPER as base material for ItemModel support
+    
+    # Note: Display names are automatically removed from filler items
+    # This prevents hover tooltips from appearing on GUI borders/backgrounds
+    
+    # Note: For 1.21.2+, Nexo items should use PAPER material with item_model component
+    # The plugin automatically falls back to GRAY_STAINED_GLASS_PANE if Nexo item not found
+  
+  # ============================================
+  # Quest GUI Items Configuration
+  # ============================================
+  items:
+    # Main Menu Items
+    main-menu:
+      daily-quests:
+        material: "BOOK"
+        name: "<yellow><bold>Daily Quests"
+        lore:
+          - "<gray>Complete daily quests for rewards"
+          - ""
+          - "<gray>Active: <yellow>{active_count}<gray>/<yellow>{max_count}"
+          - ""
+          - "<yellow>Click to view!"
+      
+      weekly-quests:
+        material: "ENCHANTED_BOOK"
+        name: "<gold><bold>Weekly Quests"
+        lore:
+          - "<gray>Harder quests with better rewards"
+          - ""
+          - "<gray>Active: <gold>{active_count}<gray>/<gold>{max_count}"
+          - ""
+          - "<gold>Click to view!"
+      
+      global-quests:
+        material: "NETHER_STAR"
+        name: "<light_purple><bold>Global Quests"
+        lore:
+          - "<gray>Server-wide collaborative quests"
+          - ""
+          - "<gray>Active: <light_purple>{active_count}"
+          - ""
+          - "<light_purple>Click to view!"
+      
+      quest-points:
+        material: "DIAMOND"
+        name: "<aqua><bold>Quest Points"
+        lore:
+          - "<gray>Your Quest Points: <aqua>{points}"
+          - ""
+          - "<gray>Earn points by completing quests"
+          - "<gray>Spend points in the shop!"
+          - ""
+          - "<aqua>Click to view stats!"
+      
+      quest-shop:
+        material: "EMERALD"
+        name: "<green><bold>Quest Shop"
+        lore:
+          - "<gray>Spend your Quest Points here"
+          - ""
+          - "<gray>Available: <green>{shop_items}<gray> items"
+          - ""
+          - "<green>Click to browse!"
+    
+    # Quest Display Items (used in all quest list GUIs)
+    quest-display:
+      active:
+        material: "BOOK"
+        name: "<yellow><bold>{quest_name}"
+        lore:
+          - "<gray>{quest_description}"
+          - ""
+          - "<gray>Type: <yellow>{quest_type}"
+          - "<gray>Difficulty: <yellow>{difficulty}"
+          - ""
+          - "<gray>Progress: <yellow>{progress}<gray>/<yellow>{target}"
+          - "<gray>Reward: <yellow>{reward}"
+          - ""
+          - "<yellow>⚡ Click to track/untrack"
+      
+      completed:
+        material: "ENCHANTED_BOOK"
+        name: "<green><bold>{quest_name} <gray>(Completed!)"
+        lore:
+          - "<gray>{quest_description}"
+          - ""
+          - "<green><bold>✓ COMPLETED!"
+          - "<gray>Reward: <green>{reward}"
+          - ""
+          - "<green>⚡ Click to claim reward!"
+      
+      locked:
+        material: "BARRIER"
+        name: "<red><bold>Locked Quest Slot"
+        lore:
+          - "<gray>Complete more quests to unlock"
+          - "<gray>additional quest slots!"
+          - ""
+          - "<dark_gray>Requires: <gray>{unlock_requirement}"
+    
+    # Navigation Items
+    navigation:
+      back:
+        material: "ARROW"
+        name: "<gray>← Back"
+        lore:
+          - "<gray>Return to previous menu"
+      
+      close:
+        material: "BARRIER"
+        name: "<red>Close"
+        lore:
+          - "<gray>Close this menu"
+      
+      next-page:
+        material: "ARROW"
+        name: "<gray>Next Page →"
+        lore:
+          - "<gray>Page <yellow>{current_page}<gray>/<yellow>{max_pages}"
+      
+      previous-page:
+        material: "ARROW"
+        name: "<gray>← Previous Page"
+        lore:
+          - "<gray>Page <yellow>{current_page}<gray>/<yellow>{max_pages}"
+    
+    # Quest Shop Items (template for shop GUI)
+    shop:
+      item-template:
+        # Material is defined per shop item in shop.yml
+        name: "<aqua><bold>{item_name}"
+        lore:
+          - "<gray>{item_description}"
+          - ""
+          - "<gray>Cost: <aqua>{cost} <gray>Quest Points"
+          - ""
+          - "<aqua>⚡ Click to purchase!"
+      
+      insufficient-points:
+        material: "BARRIER"
+        name: "<red><bold>Insufficient Points"
+        lore:
+          - "<gray>You don't have enough points!"
+          - ""
+          - "<gray>Required: <red>{cost}"
+          - "<gray>You have: <red>{your_points}"
+      
+      purchased:
+        material: "LIME_STAINED_GLASS_PANE"
+        name: "<green><bold>Already Purchased"
+        lore:
+          - "<gray>You already own this item!"
+
+# Integration Settings
+integrations:
+  # Jobs Reborn Integration
+  jobs:
+    enabled: true
+    # Job-specific quest multipliers
+    multipliers:
+      miner: 1.2
+      woodcutter: 1.1
+      farmer: 1.0
+      fisherman: 1.3
+      hunter: 1.4
+      builder: 1.1
+  
+  # Vault Integration
+  vault:
+    enabled: true
+  
+  # PlaceholderAPI Integration
+  placeholderapi:
+    enabled: true
+
+# Performance Settings
+performance:
+  # Async processing
+  async-processing: true
+  
+  # Batch size for database operations
+  batch-size: 100
+  
+  # Cache settings
+  cache:
+    player-data-expire: 1800 # 30 minutes
+    quest-data-expire: 3600 # 1 hour
+
+# Debug Settings
+debug: false
+debug-sql: false
