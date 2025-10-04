@@ -135,9 +135,25 @@ public class DailyQuestManager {
                     }
                 }
                 
-                // Determine material requirements for target matching
+                // Determine target for matching based on quest type
                 String materialTarget = "ANY";
-                if (requirements.containsKey("materials")) {
+                
+                // For hunting quests, check mob_types or items
+                if (questType == DailyQuest.QuestType.HUNTING) {
+                    if (requirements.containsKey("mob_types")) {
+                        List<String> mobTypes = (List<String>) requirements.get("mob_types");
+                        if (!mobTypes.isEmpty()) {
+                            materialTarget = mobTypes.get(0); // Use first mob type as primary target
+                        }
+                    } else if (requirements.containsKey("items")) {
+                        List<String> items = (List<String>) requirements.get("items");
+                        if (!items.isEmpty()) {
+                            materialTarget = items.get(0); // Use first item as primary target
+                        }
+                    }
+                }
+                // For mining/woodcutting/farming/building, check materials
+                else if (requirements.containsKey("materials")) {
                     List<String> materials = (List<String>) requirements.get("materials");
                     if (!materials.isEmpty()) {
                         materialTarget = materials.get(0); // Use first material as primary target
@@ -342,22 +358,50 @@ public class DailyQuestManager {
     private boolean matchesQuestTarget(DailyQuest quest, String target) {
         String questTarget = quest.getTarget();
         
-        // Check if quest accepts ANY
-        if ("ANY".equals(questTarget)) {
-            return true;
-        }
+        // NEVER match "ANY" - this was causing all quests to progress!
+        // "ANY" should only be used for generic category quests that explicitly need it
         
-        // Exact match
+        // Exact match with quest's primary target
         if (questTarget.equals(target)) {
             return true;
         }
         
-        // Check if target is in materials requirement list
+        // Check if target is in the requirements list
         Map<String, Object> requirements = quest.getRequirements();
-        if (requirements != null && requirements.containsKey("materials")) {
-            List<String> materials = (List<String>) requirements.get("materials");
-            if (materials.contains(target)) {
-                return true;
+        if (requirements != null) {
+            // For SMELTING quests with from_smelting requirement, ONLY match if the quest type is SMELTING
+            // This prevents mining STONE with silk touch from triggering "smelt stone" quests
+            if (requirements.containsKey("from_smelting") && (boolean) requirements.get("from_smelting")) {
+                // Smelting quests should ONLY be triggered by the FurnaceExtractEvent
+                // which calls addProgress with QuestType.SMELTING
+                // If we're here with a different quest type (like MINING), don't match
+                if (quest.getType() != DailyQuest.QuestType.SMELTING) {
+                    return false;
+                }
+            }
+            
+            // Check materials list (for mining, woodcutting, farming, building, smelting)
+            if (requirements.containsKey("materials")) {
+                List<String> materials = (List<String>) requirements.get("materials");
+                if (materials != null && materials.contains(target)) {
+                    return true;
+                }
+            }
+            
+            // Check mob_types list (for hunting quests - mob kills)
+            if (requirements.containsKey("mob_types")) {
+                List<String> mobTypes = (List<String>) requirements.get("mob_types");
+                if (mobTypes != null && mobTypes.contains(target)) {
+                    return true;
+                }
+            }
+            
+            // Check items list (for hunting quests - item collection)
+            if (requirements.containsKey("items")) {
+                List<String> items = (List<String>) requirements.get("items");
+                if (items != null && items.contains(target)) {
+                    return true;
+                }
             }
         }
         

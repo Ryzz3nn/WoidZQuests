@@ -51,38 +51,27 @@ public class CombatListener implements Listener {
         // Add progress to hunting quests (old system)
         plugin.getQuestManager().addProgress(killer.getUniqueId(), Quest.QuestType.HUNTING, progressData, 1);
         
-        // NEW SYSTEM: Separate tracking for mob kills vs item collection
-        // This prevents double-counting (e.g., killing a creeper AND getting leather)
+        // NEW SYSTEM: Track ONLY the actual mob type that was killed
+        // The quest matching logic will check if this mob is in the quest's mob_types list
+        // Example: Killing CREEPER will ONLY match quests that have "CREEPER" in their mob_types
         
         String mobTarget = entity.getType().name();
         
-        // Track mob kill quests (e.g., "Kill 10 Creepers")
-        // These quests have mob types as targets (CREEPER, ZOMBIE, etc.)
+        // Track mob kill quests (e.g., "Kill 10 Zombies" with mob_types: [ZOMBIE, ZOMBIE_VILLAGER, HUSK])
+        // This will ONLY match quests that explicitly list this mob type in their requirements
         plugin.getDailyQuestManager().addProgress(killer.getUniqueId(), com.ryzz3nn.woidzquests.models.DailyQuest.QuestType.HUNTING, mobTarget, 1);
         plugin.getWeeklyQuestManager().addProgress(killer.getUniqueId(), "HUNTING", mobTarget, 1);
         plugin.getGlobalQuestManager().addProgress(killer.getUniqueId(), "HUNTING", mobTarget, 1L);
         
-        // Track generic hostile/passive categories for broad quests
-        if (isHostileMob(entity)) {
-            plugin.getDailyQuestManager().addProgress(killer.getUniqueId(), com.ryzz3nn.woidzquests.models.DailyQuest.QuestType.HUNTING, "ANY_HOSTILE_MOB", 1);
-            plugin.getWeeklyQuestManager().addProgress(killer.getUniqueId(), "HUNTING", "ANY_HOSTILE_MOB", 1);
-            plugin.getGlobalQuestManager().addProgress(killer.getUniqueId(), "HUNTING", "ANY_HOSTILE_MOB", 1L);
-        } else if (isPassiveMob(entity)) {
-            plugin.getDailyQuestManager().addProgress(killer.getUniqueId(), com.ryzz3nn.woidzquests.models.DailyQuest.QuestType.HUNTING, "ANY_PASSIVE_MOB", 1);
-            plugin.getWeeklyQuestManager().addProgress(killer.getUniqueId(), "HUNTING", "ANY_PASSIVE_MOB", 1);
-            plugin.getGlobalQuestManager().addProgress(killer.getUniqueId(), "HUNTING", "ANY_PASSIVE_MOB", 1L);
-        }
-        
-        // Track item collection quests separately (e.g., "Collect 20 Leather")
-        // These quests have item types as targets (LEATHER, BONE, etc.)
-        // IMPORTANT: Only track actual drops, not mob kills, to prevent double-counting
+        // Track item drops for collection quests (e.g., "Collect 20 Leather" with items: [LEATHER])
+        // This will ONLY match quests that explicitly list this item type in their requirements
+        // NO double-counting: mob kill tracking happens above, item tracking happens here
         for (org.bukkit.inventory.ItemStack drop : event.getDrops()) {
             if (drop != null && !drop.getType().isAir()) {
                 String itemType = drop.getType().name();
                 int amount = drop.getAmount();
                 
-                // Track item collection separately - these will only match quests with item targets
-                // Quest managers will check if target matches (e.g., LEATHER quest only matches LEATHER drops)
+                // Track item collection - will only match quests with this item in their "items" list
                 plugin.getDailyQuestManager().addProgress(killer.getUniqueId(), com.ryzz3nn.woidzquests.models.DailyQuest.QuestType.HUNTING, itemType, amount);
                 plugin.getWeeklyQuestManager().addProgress(killer.getUniqueId(), "HUNTING", itemType, amount);
                 plugin.getGlobalQuestManager().addProgress(killer.getUniqueId(), "HUNTING", itemType, (long) amount);

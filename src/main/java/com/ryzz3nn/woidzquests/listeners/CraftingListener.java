@@ -57,9 +57,16 @@ public class CraftingListener implements Listener {
         Map<String, Object> progressData = new HashMap<>();
         progressData.put("item", event.getItemType().name());
         progressData.put("amount", event.getItemAmount());
+        progressData.put("from_smelting", true); // Mark as coming from smelting
         
-        // Add progress to smelting quests
+        // Add progress to smelting quests (old system)
         plugin.getQuestManager().addProgress(player.getUniqueId(), Quest.QuestType.SMELTING, progressData, event.getItemAmount());
+        
+        // Add progress to smelting quests (new system - daily/weekly/global)
+        String materialTarget = event.getItemType().name();
+        plugin.getDailyQuestManager().addProgress(player.getUniqueId(), com.ryzz3nn.woidzquests.models.DailyQuest.QuestType.SMELTING, materialTarget, event.getItemAmount());
+        plugin.getWeeklyQuestManager().addProgress(player.getUniqueId(), "SMELTING", materialTarget, event.getItemAmount());
+        plugin.getGlobalQuestManager().addProgress(player.getUniqueId(), "SMELTING", materialTarget, (long) event.getItemAmount());
         
         // Update player statistics
         plugin.getPlayerDataManager().getPlayerData(player.getUniqueId())

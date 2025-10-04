@@ -117,7 +117,7 @@ global_monster_hunt:
   target: 119300
   duration: 7d
   requirements:
-    materials: ["ANY_HOSTILE_MOB"]
+    mob_types: ["ZOMBIE", "ZOMBIE_VILLAGER", "HUSK", "DROWNED", "SKELETON", "STRAY", "WITHER_SKELETON", "CREEPER", "SPIDER", "CAVE_SPIDER", "ENDERMAN", "WITCH", "BLAZE", "GHAST", "MAGMA_CUBE", "SLIME", "PHANTOM", "VEX", "VINDICATOR", "PILLAGER", "RAVAGER", "EVOKER", "SILVERFISH", "ENDERMITE", "GUARDIAN", "ELDER_GUARDIAN", "SHULKER", "HOGLIN", "ZOGLIN", "PIGLIN_BRUTE", "WARDEN"]
     worlds: ["world", "world_nether", "world_the_end"]
   rewards:
     money: 12000

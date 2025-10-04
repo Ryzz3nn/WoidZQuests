@@ -31,8 +31,14 @@ public class DailyQuest {
         HUNTING,
         BUILDING,
         CRAFTING,
+        SMELTING,
+        BREWING,
+        ENCHANTING,
+        ANVIL,
+        SMITHING,
         EXPLORATION,
-        SURVIVAL
+        SURVIVAL,
+        TIMED
     }
     
     @Data

@@ -211,10 +211,25 @@ public class QuestManager {
             return true;
         }
         
+        // Check from_smelting requirement (for smelting quests)
+        // This ensures only items from actual smelting count, not mining with silk touch
+        if (requirements.containsKey("from_smelting")) {
+            boolean requiresFromSmelting = (boolean) requirements.get("from_smelting");
+            boolean isFromSmelting = progressData.containsKey("from_smelting") && (boolean) progressData.get("from_smelting");
+            
+            if (requiresFromSmelting && !isFromSmelting) {
+                return false; // Quest requires smelting, but this didn't come from smelting
+            }
+        }
+        
         // Check material requirements
         if (requirements.containsKey("materials")) {
             List<String> requiredMaterials = (List<String>) requirements.get("materials");
             String material = (String) progressData.get("material");
+            // For smelting quests, check "item" field instead of "material"
+            if (material == null && progressData.containsKey("item")) {
+                material = (String) progressData.get("item");
+            }
             if (material != null && !requiredMaterials.contains(material)) {
                 return false;
             }
